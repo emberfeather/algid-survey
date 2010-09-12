@@ -12,11 +12,11 @@
 			'plugins/admin/style/960/reset#midfix#.css',
 			'plugins/admin/style/960/960#midfix#.css',
 			'https://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT|Josefin+Sans+Std+Light|Molengo',
-			'plugins/prehealth/extend/content/theme/prehealth/style/survey#midfix#.css'
+			'plugins/survey/extend/content/theme/survey/style/styles#midfix#.css'
 		) />
-		<cfset template.addStyle('plugins/prehealth/extend/content/theme/prehealth/style/print#midfix#.css', 'print') />
+		<cfset template.addStyle('plugins/survey/extend/content/theme/survey/style/print#midfix#.css', 'print') />
 		
-		<cfset template.addScripts('plugins/prehealth/extend/content/theme/prehealth/script/survey#midfix#.js') />
+		<cfset template.addScripts('plugins/survey/extend/content/theme/survey/script/survey#midfix#.js') />
 		
 		<cfoutput>#template.getStyles()#</cfoutput>
 	</head>
