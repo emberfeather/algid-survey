@@ -16,7 +16,10 @@
 		) />
 		<cfset template.addStyle('plugins/survey/extend/content/theme/survey/style/print#midfix#.css', 'print') />
 		
-		<cfset template.addScripts('plugins/survey/extend/content/theme/survey/script/survey#midfix#.js') />
+		<cfset template.addScripts(
+			'plugins/survey/script/jquery.survey#midfix#.js',
+			'plugins/survey/extend/content/theme/survey/script/jquery.survey#midfix#.js'
+		) />
 		
 		<cfoutput>#template.getStyles()#</cfoutput>
 	</head>
