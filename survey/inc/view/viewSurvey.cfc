@@ -3,6 +3,7 @@
 		<cfargument name="survey" type="component" required="true" />
 		
 		<cfset var html = '' />
+		<cfset var i = '' />
 		
 		<cfsavecontent variable="html">
 			<cfoutput>
