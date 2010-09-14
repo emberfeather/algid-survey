@@ -20,7 +20,7 @@ h1 {
 	color: #fff;
 	background: #0084c2;
 	line-height: 1.5em;
-	-moz-border-radius: .5em;
+	-moz-border-radius: .75em;
 	border-radius: .75em;
 }
 
@@ -70,6 +70,35 @@ h1 {
 	float: right;
 }
 
-.question {
-	font-family: 'Josefin Sans Std Light', arial, serif;
+.item {
+	padding: .25em .5em;
+	border-top: 2px solid #0084c2;
+}
+
+.item.current {
+	background: #FEEFB3;
+}
+
+.item.noResponse {
+	background: #e2e2e2;
+}
+
+.question h4 {
+	overflow: hidden;
+}
+
+.question .number {
+	float: left;
+	border-right: 4px solid #0084c2;
+	text-align: right;
+	width: 1.5em;
+}
+
+.question h4,
+.question .number {
+	padding: 0.25em .5em;
+	font-size: 1.5em;
+	font-weight: bold;
+	line-heigth: 2em;
+	font-family: 'Josefin Sans Std Light', arial, san-serif;
 }
