@@ -11,8 +11,12 @@ h3 {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 3em;
 	margin: .25em 0 .5em 0;
+}
+
+.survey {
+	margin: 1em 0;
 }
 
 #overview {
