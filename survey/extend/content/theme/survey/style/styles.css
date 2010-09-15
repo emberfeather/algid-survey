@@ -8,11 +8,20 @@ h1,
 h2,
 h3 {
 	font-family: 'OFL Sorts Mill Goudy TT', arial, serif;
+	margin: .25em 0 .5em 0;
 }
 
 h1 {
 	font-size: 3em;
-	margin: .25em 0 .5em 0;
+}
+
+h2 {
+	font-size: 2.25em;
+}
+
+h3 {
+	margin: 1em 0 .5em 0;
+	font-size: 1.75em;
 }
 
 .survey {
@@ -75,7 +84,7 @@ h1 {
 }
 
 .item {
-	padding: .25em .5em;
+	padding: .25em .5em .75em .5em;
 	border-top: 2px solid #0084c2;
 }
 

@@ -4,28 +4,40 @@
 		
 		<cfset var html = '' />
 		<cfset var i = '' />
+		<cfset var j = '' />
+		<cfset var y = '' />
+		<cfset var current = 1 />
 		
 		<cfsavecontent variable="html">
 			<cfoutput>
-				<div class="section">
-					<cfloop from="1" to="144" index="i">
-						<div class="item<cfif i eq 3> current<cfelseif randRange(1,100) mod 4 eq 1> noResponse</cfif>">
-							<div class="question">
-								<div class="number">#i#</div>
-								
-								<h4>#randomTitle()#</h4>
-							</div>
-							<div class="answer">
-								Answer options
-							</div>
+				<div class="survey">
+					<cfloop from="1" to="#randRange(1, 4)#" index="y">
+						<div class="tab tab-#y#">
+							<cfloop from="1" to="#randRange(1, 4)#" index="i">
+								<div class="section section-#i#">
+									<h3>Section #i#</h3>
+									
+									<cfloop from="1" to="#randRange(3, 24)#" index="j">
+										<div class="item<cfif i eq 2 and j eq 3> current<cfelseif randRange(1,100) mod 4 eq 1> noResponse</cfif>">
+											<div class="question question-#current#">
+												<div class="number">#current#</div>
+												
+												<h4>#randomTitle()#</h4>
+											</div>
+											<div class="answer">
+												Answer options
+											</div>
+										</div>
+										
+										<cfset current++ />
+									</cfloop>
+								</div>
+							</cfloop>
 						</div>
 					</cfloop>
 				</div>
 			</cfoutput>
 		</cfsavecontent>
-		
-		<!--- Since markdown needs html to be not indented on the first and last line of html --->
-		<cfset html = chr(10) & '<div class="survey">' & html & chr(10) & '</div>' & chr(10) />
 		
 		<cfreturn html />
 	</cffunction>
