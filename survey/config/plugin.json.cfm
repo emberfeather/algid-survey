@@ -2,6 +2,7 @@
 	"applicationSingletons": {
 	},
 	"applicationTransients": {
+		"formForSurvey": "plugins.survey.inc.resource.structure.formSurvey"
 	},
 	"i18n": {
 		"locales": [

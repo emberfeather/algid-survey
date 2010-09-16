@@ -53,7 +53,7 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		user = variables.transport.theSession.managers.singleton.getUser();
 		survey =  variables.servSurvey.getSurvey(user, arguments.surveyID);
 		
-		return variables.viewSurvey.display(survey);
+		return variables.viewSurvey.display(survey, variables.transport.theForm);
 	}
 	
 	public string function processSurveys() {
