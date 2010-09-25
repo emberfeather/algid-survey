@@ -131,6 +131,9 @@
 			<!--- Before Create Event --->
 			<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.survey) />
 			
+			<!--- Create a new ID --->
+			<cfset arguments.survey.set_id(createUUID()) />
+			
 			<!--- Insert as a new record --->
 			<cfset collection.save(arguments.survey.get__instance()) />
 			
