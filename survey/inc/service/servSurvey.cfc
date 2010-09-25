@@ -1,4 +1,4 @@
-<cfcomponent extends="plugins.survey.inc.resource.base.service" output="false">
+<cfcomponent extends="plugins.mongodb.inc.resource.base.service" output="false">
 	<cffunction name="archiveSurvey" access="public" returntype="void" output="false">
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
@@ -49,12 +49,12 @@
 			<!--- TODO Check for user connection --->
 			
 			<!--- Retrieve Survey without responses --->
-			<cfset result = collection.findOne({ '_id': arguments.surveyID }, { 'responses': -1 }) />
+			<cfset result = collection.findOne({ '_id': arguments.surveyID }, { 'responses': 0 }) />
 			
-			<cfif not structIsEmpty(results)>
+			<cfif not structIsEmpty(result)>
 				<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
 				
-				<cfset objectSerial.deserialize(results, survey) />
+				<cfset objectSerial.deserialize(result, survey) />
 			</cfif>
 		</cfif>
 		
@@ -63,10 +63,14 @@
 	
 	<cffunction name="getSurveys" access="public" returntype="array" output="false">
 		<cfargument name="filter" type="struct" default="#{}#" />
-		<cfargument name="sort" type="struct" default="#{}#" />
 		
 		<cfset var collection = '' />
-		<cfset var defaults = {} />
+		<cfset var defaults = {
+				'orderBy': 'survey',
+				'search': ''
+			} />
+		<cfset var query = {} />
+		<cfset var sort = { 'survey': 1 } />
 		<cfset var results = '' />
 		
 		<!--- Expand the with defaults --->
@@ -76,8 +80,20 @@
 		
 		<!--- TODO Check for user connection --->
 		
+		<!--- Query building --->
+		<cfif filter.search neq ''>
+			<cfset query['survey'] = collection.regex(arguments.filter.search, 'i') />
+		</cfif>
+		
+		<!--- Sorting --->
+		<cfswitch expression="#arguments.filter.orderBy#">
+			<cfdefaultcase>
+				<cfset sort['survey'] = 1 />
+			</cfdefaultcase>
+		</cfswitch>
+		
 		<!--- Retrieve Surveys without responses --->
-		<cfset results = collection.find( arguments.filter, { 'responses': -1 }).sort(arguments.sort) />
+		<cfset results = collection.find( query, { 'responses': 0 }).sort(sort) />
 		
 		<cfreturn results.toArray() />
 	</cffunction>
