@@ -10,10 +10,6 @@
 		]
 	},
 	"key": "survey",
-	"mongoDB": {
-		"server": "localhost",
-		"port": "27017"
-	},
 	"prerequisites": {
 		"mongodb": "0.1.0"
 	},
