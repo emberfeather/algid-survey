@@ -1,10 +1,13 @@
-<cfcomponent extends="algid.inc.resource.base.service" output="false">
+<cfcomponent extends="plugins.survey.inc.resource.base.service" output="false">
 	<cffunction name="archiveSurvey" access="public" returntype="void" output="false">
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		
+		<cfset var collection = '' />
 		<cfset var eventLog = '' />
 		<cfset var observer = '' />
+		
+		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
 		
 		<!--- Get the event observer --->
 		<cfset observer = getPluginObserver('survey', 'survey') />
@@ -17,7 +20,10 @@
 		<!--- Before Archive Event --->
 		<cfset observer.beforeArchive(variables.transport, arguments.currUser, arguments.survey) />
 		
-		<!--- TODO Archive the survey --->
+		<!--- Archive the survey --->
+		<cfset arguments.survey.set('archivedOn', now()) />
+		
+		<cfset collection.save(arguments.survey.get__instance()) />
 		
 		<!--- After Archive Event --->
 		<cfset observer.afterArchive(variables.transport, arguments.currUser, arguments.survey) />
@@ -27,51 +33,60 @@
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="surveyID" type="string" required="true" />
 		
-		<cfset var survey = '' />
+		<cfset var collection = '' />
 		<cfset var i = '' />
 		<cfset var objectSerial = '' />
 		<cfset var path = '' />
 		<cfset var results = '' />
+		<cfset var survey = '' />
 		<cfset var type = '' />
 		
 		<cfset survey = getModel('survey', 'survey') />
 		
 		<cfif arguments.surveyID neq ''>
+			<cfset collection = variables.db.getCollection( 'survey.survey' ) />
+			
 			<!--- TODO Check for user connection --->
 			
-			<!--- TODO Retrieve Survey --->
+			<!--- Retrieve Survey without responses --->
+			<cfset result = collection.findOne({ '_id': arguments.surveyID }, { 'responses': -1 }) />
 			
-			<!--- 
-			<cfif results.recordCount>
+			<cfif not structIsEmpty(results)>
 				<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
 				
 				<cfset objectSerial.deserialize(results, survey) />
 			</cfif>
-			 --->
 		</cfif>
 		
 		<cfreturn survey />
 	</cffunction>
 	
-	<cffunction name="getSurveys" access="public" returntype="query" output="false">
+	<cffunction name="getSurveys" access="public" returntype="array" output="false">
 		<cfargument name="filter" type="struct" default="#{}#" />
+		<cfargument name="sort" type="struct" default="#{}#" />
 		
-		<cfset var defaults = {
-			} />
+		<cfset var collection = '' />
+		<cfset var defaults = {} />
 		<cfset var results = '' />
 		
 		<!--- Expand the with defaults --->
 		<cfset arguments.filter = extend(defaults, arguments.filter) />
 		
-		<!--- TODO Retrieve surveys --->
+		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
 		
-		<cfreturn results />
+		<!--- TODO Check for user connection --->
+		
+		<!--- Retrieve Surveys without responses --->
+		<cfset results = collection.find( arguments.filter, { 'responses': -1 }).sort(arguments.sort) />
+		
+		<cfreturn results.toArray() />
 	</cffunction>
 	
 	<cffunction name="setSurvey" access="public" returntype="void" output="false">
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		
+		<cfset var collection = '' />
 		<cfset var i = '' />
 		<cfset var isArchived = '' />
 		<cfset var observer = '' />
@@ -80,40 +95,28 @@
 		<!--- Get the event observer --->
 		<cfset observer = getPluginObserver('survey', 'survey') />
 		
+		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
+		
 		<!--- TODO Check user permissions --->
 		
 		<!--- Before Save Event --->
 		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.survey) />
 		
-		<cfif arguments.survey.getSurveyID() neq ''>
-			<!--- TODO Check for archived status --->
+		<cfif arguments.survey.get_ID() neq ''>
+			<!--- Before Update Event --->
+			<cfset observer.beforeUpdate(variables.transport, arguments.currUser, arguments.survey) />
 			
-			<cfif isArchived.archivedOn eq ''>
-				<!--- Before Update Event --->
-				<cfset observer.beforeUpdate(variables.transport, arguments.currUser, arguments.survey) />
-			<cfelse>
-				<!--- Before Unarchive Event --->
-				<cfset observer.beforeUnarchive(variables.transport, arguments.currUser, arguments.survey) />
-			</cfif>
+			<!--- Update existing survey --->
+			<cfset collection.save(arguments.survey.get__instance()) />
 			
-			<!--- TODO Update existing survey --->
-			
-			<cfif isArchived.archivedOn eq ''>
-				<!--- After Update Event --->
-				<cfset observer.afterUpdate(variables.transport, arguments.currUser, arguments.survey) />
-			<cfelse>
-				<!--- After Unarchive Event --->
-				<cfset observer.afterUnarchive(variables.transport, arguments.currUser, arguments.survey) />
-			</cfif>
+			<!--- After Update Event --->
+			<cfset observer.afterUpdate(variables.transport, arguments.currUser, arguments.survey) />
 		<cfelse>
 			<!--- Before Create Event --->
 			<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.survey) />
 			
 			<!--- Insert as a new record --->
-			<!--- Create the new ID --->
-			<cfset arguments.survey.setSurveyID( createUUID() ) />
-			
-			<!--- TODO Insert New Survey --->
+			<cfset collection.save(arguments.survey.get__instance()) />
 			
 			<!--- After Create Event --->
 			<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.survey) />
