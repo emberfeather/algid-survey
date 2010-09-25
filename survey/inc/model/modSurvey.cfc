@@ -4,7 +4,7 @@ component extends="algid.inc.resource.base.model" {
 		
 		// Survey ID
 		addAttribute(
-				attribute = 'surveyID'
+				attribute = '_id'
 			);
 		
 		// Survey
