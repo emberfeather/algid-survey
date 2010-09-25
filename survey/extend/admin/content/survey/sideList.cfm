@@ -1,7 +1,8 @@
 <cfset viewSurvey = views.get('survey', 'survey') />
 
 <cfset filter = {
-		'search' = theURL.search('search')
+		'search' = theURL.search('search'),
+		'isArchived' = false
 	} />
 
 <cfoutput>

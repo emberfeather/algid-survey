@@ -21,7 +21,7 @@
 		<cfset observer.beforeArchive(variables.transport, arguments.currUser, arguments.survey) />
 		
 		<!--- Archive the survey --->
-		<cfset arguments.survey.set('archivedOn', now()) />
+		<cfset arguments.survey.setArchivedOn(now()) />
 		
 		<cfset collection.save(arguments.survey.get__instance()) />
 		
@@ -34,12 +34,9 @@
 		<cfargument name="surveyID" type="string" required="true" />
 		
 		<cfset var collection = '' />
-		<cfset var i = '' />
 		<cfset var objectSerial = '' />
-		<cfset var path = '' />
-		<cfset var results = '' />
+		<cfset var result = '' />
 		<cfset var survey = '' />
-		<cfset var type = '' />
 		
 		<cfset survey = getModel('survey', 'survey') />
 		
@@ -83,6 +80,14 @@
 		<!--- Query building --->
 		<cfif filter.search neq ''>
 			<cfset query['survey'] = collection.regex(arguments.filter.search, 'i') />
+		</cfif>
+		
+		<cfif structKeyExists(arguments.filter, 'isArchived')>
+			<cfif arguments.filter.isArchived>
+				<cfset query['archivedOn'] = { '$exists': true } />
+			<cfelse>
+				<cfset query['archivedOn'] = { '$exists': false } />
+			</cfif>
 		</cfif>
 		
 		<!--- Sorting --->
@@ -130,9 +135,6 @@
 		<cfelse>
 			<!--- Before Create Event --->
 			<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.survey) />
-			
-			<!--- Create a new ID --->
-			<cfset arguments.survey.set_id(createUUID()) />
 			
 			<!--- Insert as a new record --->
 			<cfset collection.save(arguments.survey.get__instance()) />

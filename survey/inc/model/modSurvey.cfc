@@ -7,6 +7,11 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 				attribute = '_id'
 			);
 		
+		// Archived On
+		addAttribute(
+				attribute = 'archivedOn'
+			);
+		
 		// Survey
 		addAttribute(
 				attribute = 'survey'
