@@ -97,7 +97,12 @@
 		
 		<cfset datagrid.addColumn({
 				key = 'survey',
-				label = 'survey'
+				label = 'survey',
+				link = {
+					'_base' = '/survey/response/list',
+					'survey' = '_id',
+					'onPage' = 1
+				}
 			}) />
 		
 		<cfset datagrid.addColumn({
