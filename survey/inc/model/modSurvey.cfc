@@ -12,6 +12,18 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 				attribute = 'archivedOn'
 			);
 		
+		// Questions
+		addAttribute(
+				attribute = 'questions',
+				defaultValue = []
+			);
+		
+		// Responses
+		addAttribute(
+				attribute = 'responses',
+				defaultValue = []
+			);
+		
 		// Survey
 		addAttribute(
 				attribute = 'survey'
