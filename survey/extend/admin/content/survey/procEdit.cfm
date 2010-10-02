@@ -7,6 +7,19 @@
 	<!--- Process the form submission --->
 	<cfset objectSerial.deserialize(form, survey) />
 	
+	<cfset questions = [] />
+	
+	<!--- Handle the qusetion processing --->
+	<cfloop list="#form.fieldnames#" index="i">
+		<cfif left(i, 8) eq 'question' and trim(form[i]) neq ''>
+			<cfset question = deserializeJson(form[i]) />
+			
+			<cfset arrayAppend(questions, question) />
+		</cfif>
+	</cfloop>
+	
+	<cfset survey.setQuestions(questions) />
+	
 	<cfset servSurvey.setSurvey( transport.theSession.managers.singleton.getUser(), survey ) />
 	
 	<!--- Add a success message --->

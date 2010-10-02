@@ -42,7 +42,7 @@
 		</cfswitch>
 		
 		<!--- Retrieve Responses without responses --->
-		<cfset results = collection.find( query, { 'responses': 1 }).sort(sort).toArray() />
+		<cfset results = collection.find( query, { 'responses': 1 } ).sort(sort).toArray() />
 		
 		<cfif arrayLen(results)>
 			<cfreturn results[1].responses />

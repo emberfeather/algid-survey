@@ -28,9 +28,12 @@
 		<cfargument name="survey" type="component" required="true" />
 		<cfargument name="request" type="struct" default="#{}#" />
 		
+		<cfset var i = '' />
 		<cfset var i18n = '' />
 		<cfset var theForm = '' />
 		<cfset var theURL = '' />
+		<cfset var question = '' />
+		<cfset var questions = '' />
 		
 		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
 		<cfset theURL = variables.transport.theRequest.managers.singleton.getUrl() />
@@ -43,6 +46,27 @@
 				name = "survey",
 				label = "survey",
 				value = ( structKeyExists(arguments.request, 'survey') ? arguments.request.survey : arguments.survey.getSurvey() )
+			}) />
+		
+		<!--- Questions --->
+		<cfset questions = arguments.survey.getQuestions() />
+		
+		<cfloop from="1" to="#arrayLen(questions)#" index="i">
+			<cfset question = questions[i] />
+			
+`			<cfset theForm.addElement('textarea', {
+					class = 'allowDeletion',
+					name = 'question' & i,
+					label = 'question',
+					value = serializeJson(question)
+				}) />
+		</cfloop>
+		
+		<cfset theForm.addElement('textarea', {
+				class = 'allowDuplication allowDeletion',
+				name = 'question',
+				label = 'question',
+				value = ( structKeyExists(arguments.request, 'question') ? arguments.request.question : '' )
 			}) />
 		
 		<cfreturn theForm.toHTML(theURL.get()) />
