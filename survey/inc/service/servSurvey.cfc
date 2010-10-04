@@ -45,8 +45,8 @@
 			
 			<!--- TODO Check for user connection --->
 			
-			<!--- Retrieve Survey without responses --->
-			<cfset result = collection.findOne({ '_id': arguments.surveyID }, { 'responses': 0 }) />
+			<!--- Retrieve Survey --->
+			<cfset result = collection.findOne({ '_id': arguments.surveyID }) />
 			
 			<cfif not structIsEmpty(result)>
 				<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />

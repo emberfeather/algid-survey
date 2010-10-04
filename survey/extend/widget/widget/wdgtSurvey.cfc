@@ -51,7 +51,7 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		var view = '';
 		
 		user = variables.transport.theSession.managers.singleton.getUser();
-		survey =  variables.servSurvey.getSurvey(user, arguments.surveyID);
+		survey = variables.servSurvey.getSurvey(user, arguments.surveyID);
 		
 		return variables.viewSurvey.display(survey, variables.transport.theForm);
 	}
@@ -66,17 +66,14 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		
 		theUrl = variables.transport.theRequest.managers.singleton.getUrl();
 		
-		surveys =  [];//variables.servSurvey.getSurveys();
-		
-		availableSurveys = [];
+		surveys =  variables.servSurvey.getSurveys({
+			'isArchived' = false
+		});
 		
 		html &= '<ul class="surveys">';
 		
-		for( i = 1; i <= arrayLen(availableSurveys); i++ ) {
-			// TODO Use the dynamic base path for the link
-			theUrl.setSurvey('_base', '/surveys/' & availableSurveys[i].getPath());
-			
-			html &= '<li><a href="#theUrl.getSurvey()#">#availableSurveys[i].getSurvey()#</a></li>';
+		for( i = 1; i <= arrayLen(surveys); i++ ) {
+			html &= '<li><a href="#createUrl(surveys[i]._id)#">#surveys[i].survey#</a></li>';
 		}
 		
 		html &= '</ul>';
