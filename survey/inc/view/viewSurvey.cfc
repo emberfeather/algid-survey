@@ -24,7 +24,9 @@ component extends="algid.inc.resource.base.view" {
 		
 		// Add all the questions to the form
 		for(i = 1; i <= arrayLen(questions); i++) {
-			theForm.addElement(argumentCollection = questions[i].field);
+			if(structKeyExists(questions[i], 'field')) {
+				theForm.addElement(argumentCollection = questions[i].field);
+			}
 		}
 		
 		return theForm.toHTML(theURL.get());
