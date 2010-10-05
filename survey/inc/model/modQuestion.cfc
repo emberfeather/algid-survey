@@ -12,6 +12,11 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 				attribute = 'archivedOn'
 			);
 		
+		// Field
+		addAttribute(
+				attribute = 'field'
+			);
+		
 		// Question
 		addAttribute(
 				attribute = 'question'

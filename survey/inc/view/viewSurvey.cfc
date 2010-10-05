@@ -48,31 +48,10 @@ component extends="algid.inc.resource.base.view" {
 		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
 		theForm.addElement('text', {
-				name = "survey",
-				label = "survey",
-				value = ( structKeyExists(arguments.request, 'survey') ? arguments.request.survey : arguments.survey.getSurvey() )
-			});
-		
-		// Questions
-		questions = arguments.survey.getQuestions();
-		
-		for (i = 1; i <= arrayLen(questions); i++ ) {
-			question = questions[i];
-			
-			theForm.addElement('textarea', {
-					class = 'allowDeletion',
-					name = 'question' & i,
-					label = 'question',
-					value = serializeJson(question)
-				});
-		}
-		
-		theForm.addElement('textarea', {
-				class = 'allowDuplication allowDeletion',
-				name = 'question',
-				label = 'question',
-				value = ( structKeyExists(arguments.request, 'question') ? arguments.request.question : '' )
-			});
+			name = "survey",
+			label = "survey",
+			value = ( structKeyExists(arguments.request, 'survey') ? arguments.request.survey : arguments.survey.getSurvey() )
+		});
 		
 		return theForm.toHTML(theURL.get());
 	}

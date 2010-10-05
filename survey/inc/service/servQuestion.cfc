@@ -97,26 +97,48 @@
 		
 		<cfset var collection = '' />
 		<cfset var i = '' />
+		<cfset var isFound = '' />
 		<cfset var isArchived = '' />
 		<cfset var observer = '' />
+		<cfset var questions = '' />
 		<cfset var results = '' />
 		
 		<!--- Get the event observer --->
-		<cfset observer = getPluginObserver('question', 'question') />
+		<cfset observer = getPluginObserver('survey', 'question') />
 		
-		<cfset collection = variables.db.getCollection( 'question.question' ) />
+		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
 		
 		<!--- TODO Check user permissions --->
 		
 		<!--- Before Save Event --->
 		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.question) />
 		
-		<cfif arguments.question.getQuestionID() neq ''>
+		<cfif arguments.question.get_ID() neq ''>
 			<!--- Before Update Event --->
 			<cfset observer.beforeUpdate(variables.transport, arguments.currUser, arguments.question) />
 			
-			<!--- Update the survey --->
-			<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$push': { 'questions': arguments.question.get__instance() } }) />
+			<cfset questions = arguments.survey.getQuestions() />
+			
+			<cfset isFound = false />
+			
+			<cfloop from="1" to="#arrayLen(questions)#" index="i">
+				<cfif questions[i]._id eq arguments.question.get_id()>
+					<cfset isFound = true />
+					
+					<cfset questions[i] = arguments.question.get__instance() />
+					
+					<!--- Update the questions only --->
+					<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$set': { 'questions': questions } }) />
+					
+					<cfbreak />
+				</cfif>
+			</cfloop>
+			
+			<!--- Insert if not found --->
+			<cfif not isFound>
+				<!--- Push onto the survey --->
+				<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$push': { 'questions': arguments.question.get__instance() } }) />
+			</cfif>
 			
 			<!--- After Update Event --->
 			<cfset observer.afterUpdate(variables.transport, arguments.currUser, arguments.question) />

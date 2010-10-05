@@ -20,6 +20,12 @@
 				value = ( structKeyExists(arguments.request, 'question') ? arguments.request.question : arguments.question.getQuestion() )
 			}) />
 		
+		<cfset theForm.addElement('textarea', {
+				name = "field",
+				label = "field",
+				value = ( structKeyExists(arguments.request, 'field') ? arguments.request.field : serializeJSON( arguments.question.getField() ) )
+			}) />
+		
 		<cfreturn theForm.toHTML(theURL.get()) />
 	</cffunction>
 	
@@ -72,12 +78,7 @@
 		
 		<cfset datagrid.addColumn({
 				key = 'question',
-				label = 'question',
-				link = {
-					'_base' = '/survey/question/list',
-					'question' = '_id',
-					'onPage' = 1
-				}
+				label = 'question'
 			}) />
 		
 		<cfset datagrid.addColumn({

@@ -17,6 +17,9 @@
 	<!--- Process the form submission --->
 	<cfset objectSerial.deserialize(form, question) />
 	
+	<!--- Need to convert to a native value --->
+	<cfset question.setField( deserializeJSON(form.field) ) />
+	
 	<cfset servQuestion.setQuestion( transport.theSession.managers.singleton.getUser(), survey, question ) />
 	
 	<!--- Add a success message --->
