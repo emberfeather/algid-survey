@@ -5,3 +5,5 @@
 	<cfset theURL.setRedirect('_base', '/survey/list') />
 	<cfset theURL.redirectRedirect() />
 </cfif>
+
+<cfinclude template="/plugins/survey/extend/admin/content/survey/question/procEdit.cfm" />

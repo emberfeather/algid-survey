@@ -1,5 +1,5 @@
 <cfcomponent extends="plugins.mongodb.inc.resource.base.service" output="false">
-	<cffunction name="getQuestion" access="public" returntype="array" output="false">
+	<cffunction name="getQuestion" access="public" returntype="component" output="false">
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="surveyID" type="string" required="true" />
 		<cfargument name="questionID" type="string" required="true" />
