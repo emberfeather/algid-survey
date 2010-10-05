@@ -121,9 +121,8 @@ component extends="algid.inc.resource.base.view" {
 				key = 'survey',
 				label = 'survey',
 				link = {
-					'_base' = '/survey/response/list',
-					'survey' = '_id',
-					'onPage' = 1
+					'_base' = '/survey',
+					'survey' = '_id'
 				}
 			});
 		
