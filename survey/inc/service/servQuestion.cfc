@@ -27,7 +27,7 @@
 		
 		<cfloop from="1" to="#arrayLen(questions)#" index="i">
 			<cfif questions[i]._id eq arguments.question.get_id()>
-				<cfset questions[i].archivedOn = now() />
+				<cfset questions[i]['archivedOn'] = now() />
 				
 				<!--- Update the questions only --->
 				<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$set': { 'questions': questions } }) />
@@ -85,9 +85,10 @@
 		
 		<cfset var collection = '' />
 		<cfset var defaults = {
-				'orderBy': 'questiondOn',
-				'search': ''
-			} />
+			'orderBy': 'questiondOn',
+			'search': ''
+		} />
+		<cfset var i = '' />
 		<cfset var query = {} />
 		<cfset var sort = { 'orderBy': 1 } />
 		<cfset var results = '' />
@@ -103,15 +104,11 @@
 		<cfset query['_id'] = arguments.surveyID />
 		
 		<cfif filter.search neq ''>
-			<cfset query['question'] = collection.regex(arguments.filter.search, 'i') />
-		</cfif>
-		
-		<cfif structKeyExists(arguments.filter, 'isArchived')>
-			<cfif arguments.filter.isArchived>
-				<cfset query['archivedOn'] = { '$exists': true } />
-			<cfelse>
-				<cfset query['archivedOn'] = { '$exists': false } />
+			<cfif not structKeyExists(query, 'questions')>
+				<cfset query['questions'] = {} />
 			</cfif>
+			
+			<cfset query['questions']['question'] = collection.regex(arguments.filter.search, 'i') />
 		</cfif>
 		
 		<!--- Sorting --->
@@ -125,6 +122,17 @@
 		<cfset results = collection.find( query, { 'questions': 1 } ).sort(sort).toArray() />
 		
 		<cfif arrayLen(results)>
+			<!--- TODO Figure out how to do this as part of the query --->
+			<cfif structKeyExists(arguments.filter, 'isArchived')>
+				<cfloop from="1" to="#arrayLen(results[1].questions)#" index="i">
+					<cfif arguments.filter.isArchived and not structKeyExists(results[1].questions[i], 'archivedOn')>
+						<cfset arrayDeleteAt(results[1].questions, i) />
+					<cfelseif not arguments.filter.isArchived and structKeyExists(results[1].questions[i], 'archivedOn')>
+						<cfset arrayDeleteAt(results[1].questions, i) />
+					</cfif>
+				</cfloop>
+			</cfif>
+			
 			<cfreturn results[1].questions />
 		</cfif>
 		

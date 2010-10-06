@@ -24,7 +24,7 @@ component extends="algid.inc.resource.base.view" {
 		
 		// Add all the questions to the form
 		for(i = 1; i <= arrayLen(questions); i++) {
-			if(structKeyExists(questions[i], 'field')) {
+			if(! structKeyExists(questions[i], 'archivedOn') && structKeyExists(questions[i], 'field')) {
 				theForm.addElement(argumentCollection = questions[i].field);
 			}
 		}
