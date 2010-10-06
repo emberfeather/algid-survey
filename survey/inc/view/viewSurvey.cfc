@@ -123,4 +123,35 @@ component extends="algid.inc.resource.base.view" {
 		
 		return filter.toHTML(variables.transport.theRequest.managers.singleton.getURL(), arguments.values);
 	}
+	
+	public string function overview(required component survey) {
+		var html = '';
+		var theUrl = '';
+		
+		theUrl = variables.transport.theRequest.managers.singleton.getUrl();
+		
+		html = '<div class="grid_8 alpha">';
+		
+		html &= '<h3>Recent Responses</h3>';
+		
+		html &= '<div>TODO: Show a list of recent responses</div>';
+		
+		html &= '</div>';
+		
+		html &= '<div class="grid_4 omega">';
+		
+		html &= '<h3>Statistics</h3>';
+		
+		theUrl.setStats('_base', '/survey/question');
+		
+		html &= '<div><a href="' & theUrl.getStats() & '"><strong>' & arguments.survey.lengthQuestions() & '</strong> Questions</a></div>';
+		
+		theUrl.setStats('_base', '/survey/response');
+		
+		html &= '<div><a href="' & theUrl.getStats() & '"><div><strong>' & arguments.survey.lengthResponses() & '</strong> Responses</a></div>';
+		
+		html &= '</div>';
+		
+		return html;
+	}
 }
