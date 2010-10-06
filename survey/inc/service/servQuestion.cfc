@@ -6,6 +6,7 @@
 		
 		<cfset var collection = '' />
 		<cfset var eventLog = '' />
+		<cfset var i = '' />
 		<cfset var observer = '' />
 		<cfset var questions = '' />
 		
