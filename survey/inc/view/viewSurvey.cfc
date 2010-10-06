@@ -1,111 +1,111 @@
-<cfcomponent extends="algid.inc.resource.base.view" output="false">
-	<cffunction name="display" access="public" returntype="string" output="false">
-		<cfargument name="survey" type="component" required="true" />
-		<cfargument name="request" type="struct" required="true" />
+component extends="algid.inc.resource.base.view" {
+	public string function display(required component survey, required struct request) {
+		var i = '';
+		var i18n = '';
+		var questions = '';
+		var theForm = '';
+		var theUrl = '';
 		
-		<cfset var i18n = '' />
-		<cfset var theForm = '' />
-		<cfset var theUrl = '' />
+		i18n = variables.transport.theApplication.managers.singleton.getI18N();
+		theURL = variables.transport.theRequest.managers.singleton.getUrl();
+		theForm = variables.transport.theApplication.factories.transient.getFormForSurvey('survey', i18n);
 		
-		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
-		<cfset theURL = variables.transport.theRequest.managers.singleton.getUrl() />
-		<cfset theForm = variables.transport.theApplication.factories.transient.getFormForSurvey('survey', i18n) />
+		// Add the resource bundle for the view
+		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		<!--- Add the resource bundle for the view --->
-		<cfset theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey') />
+		// TODO Survey specific bundle
 		
-		<!--- Title --->
-		<cfset theForm.addElement('text', {
-				name = "title",
-				label = "title",
-				value = ( structKeyExists(arguments.request, 'title') ? arguments.request.title : arguments.survey.getSurvey() )
-			}) />
+		// Retrieve the questions
+		questions = arguments.survey.getQuestions();
 		
-		<cfreturn theForm.toHTML(theURL.get()) />
-	</cffunction>
+		if(!arrayLen(questions)) {
+			return '<div><strong>No questions found.</strong></div>';
+		}
+		
+		// Add all the questions to the form
+		for(i = 1; i <= arrayLen(questions); i++) {
+			if(! structKeyExists(questions[i], 'archivedOn') && structKeyExists(questions[i], 'field')) {
+				theForm.addElement(argumentCollection = questions[i].field);
+			}
+		}
+		
+		return theForm.toHTML(theURL.get());
+	}
 	
-	<cffunction name="edit" access="public" returntype="string" output="false">
-		<cfargument name="survey" type="component" required="true" />
-		<cfargument name="request" type="struct" default="#{}#" />
+	public string function edit(required component survey, struct request) {
+		var i = '';
+		var i18n = '';
+		var theForm = '';
+		var theURL = '';
+		var question = '';
+		var questions = '';
 		
-		<cfset var i18n = '' />
-		<cfset var theForm = '' />
-		<cfset var theURL = '' />
+		i18n = variables.transport.theApplication.managers.singleton.getI18N();
+		theURL = variables.transport.theRequest.managers.singleton.getUrl();
+		theForm = variables.transport.theApplication.factories.transient.getFormStandard('survey', i18n);
 		
-		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
-		<cfset theURL = variables.transport.theRequest.managers.singleton.getUrl() />
-		<cfset theForm = variables.transport.theApplication.factories.transient.getFormStandard('survey', i18n) />
+		// Add the resource bundle for the view
+		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		<!--- Add the resource bundle for the view --->
-		<cfset theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey') />
+		theForm.addElement('text', {
+			name = "survey",
+			label = "survey",
+			value = ( structKeyExists(arguments.request, 'survey') ? arguments.request.survey : arguments.survey.getSurvey() )
+		});
 		
-		<cfset theForm.addElement('text', {
-				name = "survey",
-				label = "survey",
-				value = ( structKeyExists(arguments.request, 'survey') ? arguments.request.survey : arguments.survey.getSurvey() )
-			}) />
-		
-		<cfreturn theForm.toHTML(theURL.get()) />
-	</cffunction>
+		return theForm.toHTML(theURL.get());
+	}
 	
-	<cffunction name="filterActive" access="public" returntype="string" output="false">
-		<cfargument name="filter" type="struct" default="#{}#" />
+	public string function filterActive(struct filter) {
+		var filterActive = '';
+		var options = '';
+		var results = '';
 		
-		<cfset var filterActive = '' />
-		<cfset var options = '' />
-		<cfset var results = '' />
+		filterActive = variables.transport.theApplication.factories.transient.getFilterActive(variables.transport.theApplication.managers.singleton.getI18N());
 		
-		<cfset filterActive = variables.transport.theApplication.factories.transient.getFilterActive(variables.transport.theApplication.managers.singleton.getI18N()) />
+		// Add the resource bundle for the view
+		filterActive.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		<!--- Add the resource bundle for the view --->
-		<cfset filterActive.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey') />
-		
-		<cfreturn filterActive.toHTML(arguments.filter, variables.transport.theRequest.managers.singleton.getURL(), 'search') />
-	</cffunction>
+		return filterActive.toHTML(arguments.filter, variables.transport.theRequest.managers.singleton.getURL(), 'search');
+	}
 	
-	<cffunction name="filter" access="public" returntype="string" output="false">
-		<cfargument name="values" type="struct" default="#{}#" />
+	public string function filter(struct values) {
+		var filter = '';
+		var options = '';
+		var results = '';
 		
-		<cfset var filter = '' />
-		<cfset var options = '' />
-		<cfset var results = '' />
+		filter = variables.transport.theApplication.factories.transient.getFilterVertical(variables.transport.theApplication.managers.singleton.getI18N());
 		
-		<cfset filter = variables.transport.theApplication.factories.transient.getFilterVertical(variables.transport.theApplication.managers.singleton.getI18N()) />
+		// Add the resource bundle for the view
+		filter.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		<!--- Add the resource bundle for the view --->
-		<cfset filter.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey') />
+		// Search
+		filter.addFilter('search');
 		
-		<!--- Search --->
-		<cfset filter.addFilter('search') />
-		
-		<cfreturn filter.toHTML(variables.transport.theRequest.managers.singleton.getURL(), arguments.values) />
-	</cffunction>
+		return filter.toHTML(variables.transport.theRequest.managers.singleton.getURL(), arguments.values);
+	}
 	
-	<cffunction name="datagrid" access="public" returntype="string" output="false">
-		<cfargument name="data" type="any" required="true" />
-		<cfargument name="options" type="struct" default="#{}#" />
+	public string function datagrid(required any data, struct options) {
+		var datagrid = '';
+		var i18n = '';
 		
-		<cfset var datagrid = '' />
-		<cfset var i18n = '' />
+		arguments.options.theURL = variables.transport.theRequest.managers.singleton.getURL();
+		i18n = variables.transport.theApplication.managers.singleton.getI18N();
+		datagrid = variables.transport.theApplication.factories.transient.getDatagrid(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale());
 		
-		<cfset arguments.options.theURL = variables.transport.theRequest.managers.singleton.getURL() />
-		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
-		<cfset datagrid = variables.transport.theApplication.factories.transient.getDatagrid(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale()) />
+		// Add the resource bundle for the view
+		datagrid.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		<!--- Add the resource bundle for the view --->
-		<cfset datagrid.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey') />
-		
-		<cfset datagrid.addColumn({
+		datagrid.addColumn({
 				key = 'survey',
 				label = 'survey',
 				link = {
-					'_base' = '/survey/response/list',
-					'survey' = '_id',
-					'onPage' = 1
+					'_base' = '/survey',
+					'survey' = '_id'
 				}
-			}) />
+			});
 		
-		<cfset datagrid.addColumn({
+		datagrid.addColumn({
 				class = 'phantom align-right',
 				value = [ 'delete', 'edit' ],
 				link = [
@@ -119,18 +119,18 @@
 					}
 				],
 				linkClass = [ 'delete', '' ]
-			}) />
+			});
 		
-		<cfreturn datagrid.toHTML( arguments.data, arguments.options ) />
-	</cffunction>
+		return datagrid.toHTML( arguments.data, arguments.options );
+	}
 	
-	<!--- TODO Remove --->
-	<cffunction name="randomTitle" access="public" returntype="string" output="false">
-		<cfset var titles = [
+	// TODO Remove
+	public string function randomTitle() {
+		var titles = [
 				'How much wood could a wood chuck chuck if a wood chuck could chuck wood?',
 				'How cool would I be if I were cool like you?'
-			] />
+			];
 		
-		<cfreturn titles[randRange(1, arrayLen(titles))] />
-	</cffunction>
-</cfcomponent>
+		return titles[randRange(1, arrayLen(titles))];
+	}
+}

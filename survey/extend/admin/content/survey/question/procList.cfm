@@ -1,12 +1,12 @@
 <!--- Redirect to the list page if no survey chosen --->
 <cfif theUrl.search('survey') eq ''>
-	<cfset transport.theSession.managers.singleton.getMessage().addMessages('Please select a survey before working with responses.') />
+	<cfset transport.theSession.managers.singleton.getMessage().addMessages('Please select a survey before working with questions.') />
 	
 	<cfset theURL.setRedirect('_base', '/survey/list') />
 	<cfset theURL.redirectRedirect() />
 </cfif>
 
-<cfset servResponse = services.get('survey', 'response') />
+<cfset servQuestion = services.get('survey', 'question') />
 
 <cfif cgi.request_method eq 'post'>
 	<!--- Update the URL and redirect --->
