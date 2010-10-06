@@ -123,14 +123,4 @@ component extends="algid.inc.resource.base.view" {
 		
 		return filter.toHTML(variables.transport.theRequest.managers.singleton.getURL(), arguments.values);
 	}
-	
-	// TODO Remove
-	public string function randomTitle() {
-		var titles = [
-				'How much wood could a wood chuck chuck if a wood chuck could chuck wood?',
-				'How cool would I be if I were cool like you?'
-			];
-		
-		return titles[randRange(1, arrayLen(titles))];
-	}
 }
