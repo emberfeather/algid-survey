@@ -177,6 +177,30 @@ component extends="algid.inc.resource.base.view" {
 		return filter.toHTML(variables.transport.theRequest.managers.singleton.getURL(), arguments.values);
 	}
 	
+	public string function import(struct request) {
+		var i = '';
+		var i18n = '';
+		var theForm = '';
+		var theURL = '';
+		var question = '';
+		var questions = '';
+		
+		i18n = variables.transport.theApplication.managers.singleton.getI18N();
+		theURL = variables.transport.theRequest.managers.singleton.getUrl();
+		theForm = variables.transport.theApplication.factories.transient.getFormStandard('survey', i18n);
+		
+		// Add the resource bundle for the view
+		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
+		
+		theForm.addElement('file', {
+			name = "surveyFile",
+			label = "surveyFile",
+			value = ( structKeyExists(arguments.request, 'surveyFile') ? arguments.request.survey : '' )
+		});
+		
+		return theForm.toHTML(theURL.get());
+	}
+	
 	public string function overview(required component survey) {
 		var html = '';
 		var theUrl = '';

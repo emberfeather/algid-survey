@@ -1,8 +1,5 @@
 <cfset servSurvey = services.get('survey', 'survey') />
 
-<!--- Retrieve the object --->
-<cfset survey = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
-
 <cfif cgi.request_method eq 'post'>
 	<!--- Process the form submission --->
 	<cfset results = {
