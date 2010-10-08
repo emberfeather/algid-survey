@@ -90,6 +90,10 @@
 			</cfif>
 		</cfif>
 		
+		<cfif structKeyExists(arguments.filter, 'in_id')>
+			<cfset query['_id'] = { '$in': arguments.filter.in_id } />
+		</cfif>
+		
 		<!--- Sorting --->
 		<cfswitch expression="#arguments.filter.orderBy#">
 			<cfdefaultcase>
