@@ -32,6 +32,59 @@ component extends="algid.inc.resource.base.view" {
 		return theForm.toHTML(theURL.get());
 	}
 	
+	public string function export(required any data, struct options) {
+		var datagrid = '';
+		var html = '';
+		var i18n = '';
+		
+		arguments.options.theURL = variables.transport.theRequest.managers.singleton.getURL();
+		i18n = variables.transport.theApplication.managers.singleton.getI18N();
+		datagrid = variables.transport.theApplication.factories.transient.getDatagrid(i18n, variables.transport.theSession.managers.singleton.getSession().getLocale());
+		
+		// Add the resource bundle for the view
+		datagrid.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
+		
+		datagrid.addColumn({
+			key = '_id',
+			type = 'checkbox',
+			class = 'width-min'
+		});
+		
+		datagrid.addColumn({
+			key = 'survey',
+			label = 'survey',
+			link = {
+				'_base' = '/survey',
+				'survey' = '_id'
+			}
+		});
+		
+		datagrid.addColumn({
+			class = 'phantom align-right width-min',
+			value = [ 'delete', 'edit' ],
+			link = [
+				{
+					'survey' = '_id',
+					'_base' = '/survey/archive'
+				},
+				{
+					'survey' = '_id',
+					'_base' = '/survey/edit'
+				}
+			],
+			linkClass = [ 'delete', '' ]
+		});
+		
+		// Create a form for the datagrid
+		html = '<form method="post" action="' & arguments.options.theURL.get() & '">';
+		
+		html &= datagrid.toHTML( arguments.data, arguments.options );
+		
+		html &= '<input type="submit" value="Export"></form>';
+		
+		return html;
+	}
+	
 	public string function datagrid(required any data, struct options) {
 		var datagrid = '';
 		var i18n = '';

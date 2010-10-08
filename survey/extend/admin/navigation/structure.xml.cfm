@@ -1,5 +1,7 @@
 <navigation>
 	<survey position="main">
+		<import position="action"/>
+		<export position="action"/>
 		<list position="action"/>
 		<add position="action"/>
 		<edit/>
