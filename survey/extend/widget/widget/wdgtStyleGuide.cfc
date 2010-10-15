@@ -87,8 +87,8 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		
 		// Date
 		theForm.addElement('date', {
-			name: 'time',
-			label: 'time',
+			name: 'date',
+			label: 'date',
 			value: ''
 		});
 		
