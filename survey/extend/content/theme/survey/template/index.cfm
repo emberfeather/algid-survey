@@ -17,6 +17,7 @@
 		<cfset template.addStyle('plugins/survey/extend/content/theme/survey/style/print#midfix#.css', 'print') />
 		
 		<cfset template.addScripts(
+			'/cf-compendium/script/modernizr-min.js',
 			'plugins/survey/script/jquery.survey#midfix#.js',
 			'plugins/survey/extend/content/theme/survey/script/jquery.survey#midfix#.js'
 		) />
