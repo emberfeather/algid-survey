@@ -4,7 +4,11 @@
 	<!--- Process the form submission --->
 	
 	<!--- Read uploaded file --->
-	<cfset import = fileRead(form.surveyFile) />
+	<cfif fileExists(form.surveyFile)>
+		<cfset import = fileRead(form.surveyFile) />
+	<cfelse>
+		<cfset import = form.surveyFile />
+	</cfif>
 	
 	<!--- Validate json format --->
 	<cfif not isJson(import)>
