@@ -57,7 +57,7 @@
 					<div class="grid_3">
 						<div id="overview" class="grid_3 alpha omega">
 							<div class="box">
-								<progress id="surveyPosition" value="0" max="100"></progress>
+								Last saved 2 millenia ago.
 							</div>
 							
 							<div class="stripe">
