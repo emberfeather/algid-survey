@@ -30,9 +30,13 @@ component extends="plugins.widget.inc.resource.base.widget" {
 	
 	public string function process( required string path, required string content, required struct args ) {
 		var theForm = variables.transport.theApplication.factories.transient.getFormForSurvey('survey', variables.i18n);
+		var template = variables.transport.theRequest.managers.singleton.getTemplate();
 		
 		// Add the resource bundle for the style guide
 		theForm.addBundle('plugins/survey/i18n/extend/widget/widget', 'wdgtStyleGuide');
+		
+		// Add the stylesheet to the template
+		template.addStyles('plugins/survey/style/form.css');
 		
 		// Add a mangerie of survey fields to showcase for styling
 		
@@ -124,6 +128,13 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		theForm.addElement('tel', {
 			name: 'tel',
 			label: 'tel',
+			value: ''
+		});
+		
+		// Rank
+		theForm.addElement('rank', {
+			name: 'rank',
+			label: 'rank',
 			value: ''
 		});
 		

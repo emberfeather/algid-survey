@@ -1,0 +1,13 @@
+.form .element.textarea label,
+.form .element.rank label {
+	float: none;
+}
+
+.form .element.rank .col_1 {
+}
+
+.form .element.rank .col_2 {
+}
+
+.form .element.rank .col_3 {
+}
