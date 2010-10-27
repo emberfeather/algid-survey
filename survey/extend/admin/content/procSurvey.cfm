@@ -10,4 +10,4 @@
 <cfset survey = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
 
 <!--- Add to the current levels --->
-<cfset template.addLevel(survey.getSurvey(), survey.getSurvey(), theUrl.get()) />
+<cfset template.addLevel(survey.getSurvey(), survey.getSurvey(), theUrl.get(), 0, true) />

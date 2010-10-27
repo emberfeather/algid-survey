@@ -24,4 +24,4 @@
 <cfset theUrl.setSurvey('_base', '/survey') />
 
 <!--- Add to the current levels --->
-<cfset template.addLevel(surveyObj.getSurvey(), surveyObj.getSurvey(), theUrl.getSurvey(), -2) />
+<cfset template.addLevel(surveyObj.getSurvey(), surveyObj.getSurvey(), theUrl.getSurvey(), -2, true) />
