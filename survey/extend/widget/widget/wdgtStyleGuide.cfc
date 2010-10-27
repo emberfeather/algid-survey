@@ -29,6 +29,7 @@ component extends="plugins.widget.inc.resource.base.widget" {
 	}
 	
 	public string function process( required string path, required string content, required struct args ) {
+		var element = '';
 		var theForm = variables.transport.theApplication.factories.transient.getFormForSurvey('survey', variables.i18n);
 		var template = variables.transport.theRequest.managers.singleton.getTemplate();
 		
@@ -132,12 +133,20 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		});
 		
 		// Rank
-		theForm.addElement('rank', {
+		element = {
 			name: 'rank',
 			label: 'rank',
+			options = createObject('component', 'cf-compendium.inc.resource.utility.options').init(),
 			value: ''
-		});
+		};
 		
-		return '<div><strong>This form is for styling purposes and is not functional.</strong></div>' & theForm.toHTML(theURL.get());
+		element.options.addOption('Title 1', 'Value 1');
+		element.options.addOption('Title 2', 'Value 2');
+		element.options.addOption('Title 3', 'Value 3');
+		element.options.addOption('Title 4', 'Value 4');
+		
+		theForm.addElement('rank', element);
+		
+		return '<div><strong>This form is for styling purposes and is not functional.</strong></div>' & theForm.toHTML(theURL.get(), { class: 'survey' });
 	}
 }

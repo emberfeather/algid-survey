@@ -29,7 +29,7 @@ component extends="algid.inc.resource.base.view" {
 			}
 		}
 		
-		return theForm.toHTML(theURL.get());
+		return theForm.toHTML(theURL.get(), { class: 'survey' });
 	}
 	
 	public string function export(required any data, struct options) {

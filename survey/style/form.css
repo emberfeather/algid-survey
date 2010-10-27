@@ -1,13 +1,14 @@
-.form .element.textarea label,
-.form .element.rank label {
+.form.survey .element.textarea label,
+.form.survey .element.rank label {
 	float: none;
 }
 
-.form .element.rank .col_1 {
+.form.survey .element.rank ol {
+	list-style-type: decimal;
+	list-style-position: inside;
 }
 
-.form .element.rank .col_2 {
-}
-
-.form .element.rank .col_3 {
+.form.survey .element.rank .col {
+	width: 50%;
+	float: left;
 }
