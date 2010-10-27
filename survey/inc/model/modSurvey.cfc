@@ -34,4 +34,20 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		
 		return this;
 	}
+	
+	/**
+	 * Don't count any surveys that are archived.
+	 */
+	public function lengthQuestions() {
+		var count = 0;
+		var i = '';
+		
+		for( i = 1; i <= arrayLen(variables.instance.questions); i++ ) {
+			if( !structKeyExists(variables.instance.questions[i], 'archivedOn') || variables.instance.questions[i].archivedOn == '' ) {
+				count++;
+			}
+		}
+		
+		return count;
+	}
 }
