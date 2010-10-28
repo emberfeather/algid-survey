@@ -1,5 +1,5 @@
 component extends="plugins.mongodb.inc.resource.base.model" {
-	public component function init(required component i18n, required string locale) {
+	public component function init(required component i18n, string locale = 'en_US') {
 		super.init(arguments.i18n, arguments.locale);
 		
 		// Survey ID
