@@ -29,6 +29,7 @@
 		<cfset var formatted = '' />
 		<cfset var group = '' />
 		<cfset var optGroups = '' />
+		<cfset var option = '' />
 		
 		<cfset formatted = '<div ' />
 		
