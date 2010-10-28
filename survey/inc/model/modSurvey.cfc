@@ -1,5 +1,5 @@
 component extends="plugins.mongodb.inc.resource.base.model" {
-	public component function init(required component i18n, required string locale) {
+	public component function init(required component i18n, string locale = 'en_US') {
 		super.init(arguments.i18n, arguments.locale);
 		
 		// Survey ID
@@ -33,5 +33,21 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		addBundle('plugins/survey/i18n/inc/model', 'modSurvey');
 		
 		return this;
+	}
+	
+	/**
+	 * Don't count any surveys that are archived.
+	 */
+	public function lengthQuestions() {
+		var count = 0;
+		var i = '';
+		
+		for( i = 1; i <= arrayLen(variables.instance.questions); i++ ) {
+			if( !structKeyExists(variables.instance.questions[i], 'archivedOn') || variables.instance.questions[i].archivedOn == '' ) {
+				count++;
+			}
+		}
+		
+		return count;
 	}
 }
