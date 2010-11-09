@@ -2,6 +2,7 @@ component extends="algid.inc.resource.base.view" {
 	public string function display(required component survey, required struct request) {
 		var i = '';
 		var i18n = '';
+		var plugin = '';
 		var questions = '';
 		var theForm = '';
 		var theUrl = '';
@@ -9,11 +10,13 @@ component extends="algid.inc.resource.base.view" {
 		i18n = variables.transport.theApplication.managers.singleton.getI18N();
 		theURL = variables.transport.theRequest.managers.singleton.getUrl();
 		theForm = variables.transport.theApplication.factories.transient.getFormForSurvey('survey', i18n);
+		plugin = variables.transport.theApplication.managers.plugin.getSurvey();
 		
 		// Add the resource bundle for the view
 		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
 		
-		// TODO Survey specific bundle
+		// Survey specific bundle
+		theForm.addBundle(plugin.getStoragePath() & '/i18n', 'survey-' & arguments.survey.get_ID());
 		
 		// Retrieve the questions
 		questions = arguments.survey.getQuestions();
@@ -25,6 +28,10 @@ component extends="algid.inc.resource.base.view" {
 		// Add all the questions to the form
 		for(i = 1; i <= arrayLen(questions); i++) {
 			if(! structKeyExists(questions[i], 'archivedOn') && structKeyExists(questions[i], 'field')) {
+				if(!structKeyExists(questions[i].field.options, 'label')) {
+					questions[i].field.options['label'] = 'question-' & questions[i]._id;
+				}
+				
 				theForm.addElement(argumentCollection = questions[i].field);
 			}
 		}

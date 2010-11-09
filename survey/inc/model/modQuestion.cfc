@@ -4,35 +4,35 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		
 		// Question ID
 		addAttribute(
-				attribute = '_id'
-			);
+			attribute = '_id'
+		);
 		
 		// Archived On
 		addAttribute(
-				attribute = 'archivedOn'
-			);
+			attribute = 'archivedOn'
+		);
 		
 		// Field
 		addAttribute(
-				attribute = 'field'
-			);
+			attribute = 'field'
+		);
 		
 		// I18N
 		addAttribute(
-				attribute = 'i18n',
-				defaultValue = {}
-			);
+			attribute = 'i18n',
+			defaultValue = {}
+		);
 		
 		// Question
 		addAttribute(
-				attribute = 'question'
-			);
+			attribute = 'question'
+		);
 		
 		// Order By
 		addAttribute(
-				attribute = 'orderBy',
-				defaultValue = 1000
-			);
+			attribute = 'orderBy',
+			defaultValue = 1000
+		);
 		
 		// Set the bundle information for translation
 		addBundle('plugins/survey/i18n/inc/model', 'modQuestion');
@@ -43,9 +43,16 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 	public string function _toProperties(string locale = 'en_US') {
 		var i = '';
 		var i18n = this.getI18N();
-		var text = '';
+		var key = '';
 		
-		text = 'question-' & this.get_ID() & '=' & i18n[arguments.locale] & chr(10);
+		// Determine if it has a label key given or generate default
+		if(structKeyExists(variables.instance['field'], 'options') && structKeyExists(variables.instance['field'].options, 'label')) {
+			key = variables.instance['field'].options.label;
+		} else {
+			key = 'question-' & this.get_ID();
+		}
+		
+		text = key & '=' & i18n[arguments.locale] & chr(10);
 		
 		// TODO Convert any option locales
 		
