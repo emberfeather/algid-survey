@@ -4,7 +4,7 @@ component extends="algid.inc.resource.plugin.configure" {
 		var storagePath = '';
 		
 		// Get the plugin
-		plugin = arguments.theApplication.managers.plugin.getContent();
+		plugin = arguments.theApplication.managers.plugin.getSurvey();
 		
 		storagePath = plugin.getStoragePath();
 		

@@ -2,7 +2,7 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 	public component function init(required component i18n, required string locale) {
 		super.init(arguments.i18n, arguments.locale);
 		
-		// Survey ID
+		// Question ID
 		addAttribute(
 				attribute = '_id'
 			);
@@ -15,6 +15,12 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		// Field
 		addAttribute(
 				attribute = 'field'
+			);
+		
+		// I18N
+		addAttribute(
+				attribute = 'i18n',
+				defaultValue = {}
 			);
 		
 		// Question
@@ -32,5 +38,17 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		addBundle('plugins/survey/i18n/inc/model', 'modQuestion');
 		
 		return this;
+	}
+	
+	public string function _toProperties(string locale = 'en_US') {
+		var i = '';
+		var i18n = this.getI18N();
+		var text = '';
+		
+		text = 'question-' & this.get_ID() & '=' & i18n[arguments.locale] & chr(10);
+		
+		// TODO Convert any option locales
+		
+		return text;
 	}
 }
