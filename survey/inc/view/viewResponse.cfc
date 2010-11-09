@@ -94,7 +94,8 @@
 						'_base' = '/response/edit'
 					}
 				],
-				linkClass = [ 'delete', '' ]
+				linkClass = [ 'delete', '' ],
+				title = 'response'
 			}) />
 		 --->
 		

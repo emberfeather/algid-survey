@@ -94,7 +94,8 @@
 						'_base' = '/survey/question/edit'
 					}
 				],
-				linkClass = [ 'delete', '' ]
+				linkClass = [ 'delete', '' ],
+				title = 'question'
 			}) />
 		
 		<cfreturn datagrid.toHTML( arguments.data, arguments.options ) />
