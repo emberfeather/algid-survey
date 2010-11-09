@@ -147,9 +147,6 @@
 			<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.survey) />
 		</cfif>
 		
-		<!--- Update the i18n for the survey --->
-		<cfset updateI18N(arguments.currUser, arguments.survey) />
-		
 		<!--- After Save Event --->
 		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.survey) />
 	</cffunction>
@@ -197,7 +194,7 @@
 			}
 			
 			// Write the survey locale file
-			fileWrite(storagePath & '/survey-' & arguments.survey.get_ID() & '_' & locales[i] & '.properties', fileContents);
+			fileWrite(storagePath & '/survey-' & arguments.survey.get_ID() & '_' & locales[i] & '.properties', fileContents & chr(10));
 		}
 		
 		// Write the base survey locale file
