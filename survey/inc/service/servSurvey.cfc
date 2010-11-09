@@ -150,4 +150,57 @@
 		<!--- After Save Event --->
 		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.survey) />
 	</cffunction>
+<cfscript>
+	public void function updateI18N(required component currUser, required component survey) {
+		var fileContents = '';
+		var i = '';
+		var i18n = '';
+		var j = '';
+		var key = '';
+		var keys = '';
+		var locales = '';
+		var plugin = '';
+		var objectSerial = '';
+		var question = '';
+		var questions = '';
+		var storagePath = '';
+		
+		// Get the plugin
+		plugin = variables.transport.theApplication.managers.plugin.getSurvey();
+		
+		storagePath = plugin.getStoragePath() & '/i18n';
+		
+		locales = arguments.survey.getLocales();
+		
+		objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial();
+		
+		for( i = 1; i <= arrayLen(locales); i++ ) {
+			fileContents = '## Updated on: ' & dateFormat(now()) & ' ' & timeFormat(now()) & chr(10) & chr(10);
+			
+			// Get the properties version of the survey
+			fileContents &= arguments.survey._toProperties(locales[i]);
+			
+			fileContents &= chr(10) & '## Questions' & chr(10);
+			
+			questions = arguments.survey.getQuestions();
+			
+			for( j = 1; j <= arrayLen(questions); j++ ) {
+				question = getModel('survey', 'question');
+				
+				objectSerial.deserialize(questions[j], question);
+				
+				// Add the properties for each of the questions
+				fileContents &= question._toProperties(locales[i]);
+			}
+			
+			// Write the survey locale file
+			fileWrite(storagePath & '/survey-' & arguments.survey.get_ID() & '_' & locales[i] & '.properties', fileContents & chr(10));
+		}
+		
+		// Write the base survey locale file
+		if(!fileExists(storagePath & '/survey-' & arguments.survey.get_ID() & '.properties')) {
+			fileWrite(storagePath & '/survey-' & arguments.survey.get_ID() & '.properties', '');
+		}
+	}
+</cfscript>
 </cfcomponent>

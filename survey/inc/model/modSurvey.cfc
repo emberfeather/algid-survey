@@ -12,6 +12,12 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 				attribute = 'archivedOn'
 			);
 		
+		// I18N
+		addAttribute(
+				attribute = 'i18n',
+				defaultValue = {}
+			);
+		
 		// Questions
 		addAttribute(
 				attribute = 'questions',
@@ -35,6 +41,10 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		return this;
 	}
 	
+	public array function getLocales() {
+		return listToArray(structKeyList(this.getI18N()));
+	}
+	
 	/**
 	 * Don't count any surveys that are archived.
 	 */
@@ -49,5 +59,16 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		}
 		
 		return count;
+	}
+	
+	public string function _toProperties(string locale = 'en_US') {
+		var i = '';
+		var i18n = this.getI18N();
+		var text = '';
+		var questions = '';
+		
+		text = '## Survey Title' & chr(10) & 'survey=' & i18n[arguments.locale].survey & chr(10);
+		
+		return text;
 	}
 }
