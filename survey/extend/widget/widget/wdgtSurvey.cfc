@@ -46,12 +46,25 @@ component extends="plugins.widget.inc.resource.base.widget" {
 	}
 	
 	public string function processSurvey( required string surveyID ) {
+		var plugin = '';
 		var survey = '';
+		var template = '';
 		var user = '';
 		var view = '';
 		
 		user = variables.transport.theSession.managers.singleton.getUser();
 		survey = variables.servSurvey.getSurvey(user, arguments.surveyID);
+		
+		// Add the survey title to the current template
+		if (variables.transport.theRequest.managers.singleton.hasTemplate()) {
+			plugin = transport.theApplication.managers.plugin.getSurvey();
+			template = variables.transport.theRequest.managers.singleton.getTemplate();
+			
+			// Survey specific bundle
+			template.addBundle(plugin.getStoragePath() & '/i18n', 'survey-' & survey.get_ID());
+			
+			template.addLevel(template.getLabel('survey'), template.getLabel('survey'), '', 0, true);
+		}
 		
 		return variables.viewSurvey.display(survey, variables.transport.theForm);
 	}
