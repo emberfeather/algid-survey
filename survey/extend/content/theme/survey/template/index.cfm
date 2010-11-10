@@ -5,22 +5,24 @@
 		
 		<title><cfoutput>#template.getHTMltitle()#</cfoutput></title>
 		
-		<!--- Include minified files for production --->
-		<cfset midfix = (transport.theApplication.managers.singleton.getApplication().isProduction() ? '-min' : '') />
-		
-		<cfset template.addStyles(
-			'plugins/admin/style/960/reset#midfix#.css',
-			'plugins/admin/style/960/960#midfix#.css',
-			'https://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT|Josefin+Sans+Std+Light|Molengo',
-			'plugins/survey/extend/content/theme/survey/style/styles#midfix#.css'
-		) />
-		<cfset template.addStyle('plugins/survey/extend/content/theme/survey/style/print#midfix#.css', 'print') />
-		
-		<cfset template.addScripts(
-			'/cf-compendium/script/modernizr-min.js',
-			'plugins/survey/script/jquery.survey#midfix#.js',
-			'plugins/survey/extend/content/theme/survey/script/jquery.survey#midfix#.js'
-		) />
+		<cfsilent>
+			<!--- Include minified files for production --->
+			<cfset midfix = (transport.theApplication.managers.singleton.getApplication().isProduction() ? '-min' : '') />
+			
+			<cfset template.addStyles(
+				'plugins/admin/style/960/reset#midfix#.css',
+				'plugins/admin/style/960/960#midfix#.css',
+				'https://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT|Josefin+Sans+Std+Light|Molengo',
+				'plugins/survey/extend/content/theme/survey/style/styles#midfix#.css'
+			) />
+			<cfset template.addStyle('plugins/survey/extend/content/theme/survey/style/print#midfix#.css', 'print') />
+			
+			<cfset template.addScripts(
+				'/cf-compendium/script/modernizr-min.js',
+				'plugins/survey/script/jquery.survey#midfix#.js',
+				'plugins/survey/extend/content/theme/survey/script/jquery.survey#midfix#.js'
+			) />
+		</cfsilent>
 		
 		<cfoutput>#template.getStyles()#</cfoutput>
 	</head>
