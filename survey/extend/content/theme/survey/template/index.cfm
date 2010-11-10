@@ -27,8 +27,8 @@
 	<body>
 		<div class="container_outer">
 			<div class="container_12">
-				<div class="container_inner">
-					<div class="grid_9">
+				<div class="container_inner respect-float">
+					<div class="grid_9 respect-float">
 						<h1><cfoutput>#template.getPageTitle()#</cfoutput></h1>
 						
 						<!--- Show any messages, errors, warnings, or successes --->
@@ -48,29 +48,25 @@
 						
 						<cfoutput>#messages.toHTML()#</cfoutput>
 						
-						<div class="clear"><!-- clear --></div>
-						
 						<!--- Output the main content --->
 						<cfoutput>#template.getContent()#</cfoutput>
 					</div>
 					
-					<div class="grid_3">
+					<div class="grid_3 respect-float">
 						<div id="overview" class="grid_3 alpha omega">
 							<div class="box">
 								Last saved 2 millenia ago.
 							</div>
 							
-							<div class="stripe">
+							<div class="stripe respect-float">
 								<div id="surveyPercent">
 									<span class="value">25</span><small>% Complete</small>
 								</div>
 								
 								<progress id="surveyProgress" value="25" max="100"></progress>
-								
-								<div class="clear"><!-- clear --></div>
 							</div>
 							
-							<div class="box">
+							<div class="box respect-float">
 								<dl>
 									<dt>Contact Information</dt>
 									<dd><span class="value">12</span>/16</dd>
@@ -81,12 +77,9 @@
 									<dt>General Facts</dt>
 									<dd><span class="value">2</span>/26</dd>
 								</dl>
-								<div class="clear"><!-- clear --></div>
 							</div>
 						</div>
 					</div>
-					
-					<div class="clear"><!-- clear --></div>
 				</div>
 			</div>
 		</div>
