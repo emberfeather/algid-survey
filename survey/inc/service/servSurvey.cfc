@@ -107,6 +107,47 @@
 		<cfreturn results.toArray() />
 	</cffunction>
 	
+	<cffunction name="importSurveys" access="public" returntype="void" output="false">
+		<cfargument name="currUser" type="component" required="true" />
+		<cfargument name="import" type="struct" required="true" />
+		
+		<cfset var objectSerial = '' />
+		<cfset var observer = '' />
+		<cfset var survey = '' />
+		
+		<!--- Get the event observer --->
+		<cfset observer = getPluginObserver('survey', 'survey') />
+		
+		<!--- Validate has surveys --->
+		<cfif not structKeyExists(arguments.import, 'surveys')>
+			<cfthrow type="validation" message="Invalid format" detail="The import is missing the survey information." />
+		</cfif>
+		
+		<cfif !isArray(arguments.import.surveys)>
+			<cfthrow type="validation" message="Invalid format" detail="The import surveys need to be an array." />
+		</cfif>
+		
+		<!--- Before Import Event --->
+		<cfset observer.beforeImport(variables.transport, arguments.currUser, arguments.import) />
+		
+		<cfset objectSerial = transport.theApplication.managers.singleton.getObjectSerial() />
+		
+		<!--- Save all surveys to db --->
+		<cfloop array="#arguments.import.surveys#" index="result">
+			<cfset survey = getSurvey(arguments.currUser, '') />
+			
+			<cfset objectSerial.deserialize(result, survey) />
+			
+			<cfset setSurvey(arguments.currUser, survey) />
+			
+			<!--- After Import Item Event --->
+			<cfset observer.afterImportItem(variables.transport, arguments.currUser, survey) />
+		</cfloop>
+		
+		<!--- After Import Event --->
+		<cfset observer.afterImport(variables.transport, arguments.currUser, arguments.import) />
+	</cffunction>
+	
 	<cffunction name="setSurvey" access="public" returntype="void" output="false">
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />

@@ -17,26 +17,7 @@
 	
 	<cfset import = deserializeJson(import) />
 	
-	<!--- Validate has surveys --->
-	<cfif not structKeyExists(import, 'surveys')>
-		<cfthrow type="validation" message="Invalid format" detail="The import file is missing the survey information." />
-	</cfif>
-	
-	<cfif !isArray(import.surveys)>
-		<cfthrow type="validation" message="Invalid format" detail="The import file surveys need to be an array." />
-	</cfif>
-	
-	<cfset user = transport.theSession.managers.singleton.getUser() />
-	<cfset objectSerial = transport.theApplication.managers.singleton.getObjectSerial() />
-	
-	<!--- Save all surveys to db --->
-	<cfloop array="#import.surveys#" index="result">
-		<cfset survey = servSurvey.getSurvey(user, '') />
-		
-		<cfset objectSerial.deserialize(result, survey) />
-		
-		<cfset servSurvey.setSurvey(user, survey) />
-	</cfloop>
+	<cfset servSurvey.importSurveys(transport.theSession.managers.singleton.getUser(), import) />
 	
 	<!--- Add a success message --->
 	<!--- TODO Use i18n --->
