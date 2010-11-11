@@ -113,7 +113,7 @@
 		
 		<cfset var objectSerial = '' />
 		<cfset var observer = '' />
-		<cfset var result />
+		<cfset var result = '' />
 		<cfset var survey = '' />
 		
 		<!--- Get the event observer --->
