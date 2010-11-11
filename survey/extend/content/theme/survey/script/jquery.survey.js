@@ -3,7 +3,7 @@
  * 
  * Used to unobtrusively enhance the survey experience for the user.
  */
-;(function($) {
+(function($) {
 	var positionElement;
 	var percentElement;
 	var progressElement;
@@ -22,4 +22,4 @@
 		$('.value', percentElement).text(percent.toFixed(0));
 		progressElement.attr('value', percent);
 	};
-})(jQuery);
+}(jQuery));
