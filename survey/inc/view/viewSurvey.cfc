@@ -2,8 +2,10 @@ component extends="algid.inc.resource.base.view" {
 	public string function display(required component survey, required struct request) {
 		var i = '';
 		var i18n = '';
+		var j = '';
 		var plugin = '';
 		var questions = '';
+		var newOptions = '';
 		var theForm = '';
 		var theUrl = '';
 		
@@ -30,6 +32,17 @@ component extends="algid.inc.resource.base.view" {
 			if(! structKeyExists(questions[i], 'archivedOn') && structKeyExists(questions[i], 'field')) {
 				if(!structKeyExists(questions[i].field.options, 'label')) {
 					questions[i].field.options['label'] = 'question-' & questions[i]._id;
+				}
+				
+				// Check for options
+				if(structKeyExists(questions[i].field.options, 'options')) {
+					newOptions = variables.transport.theApplication.factories.transient.getOptions();
+					
+					for(j = 1; j <= arrayLen(questions[i].field.options.options); j++) {
+						newOptions.addOption(questions[i].field.options.options[j].text, questions[i].field.options.options[j].value);
+					}
+					
+					questions[i].field.options.options = newOptions;
 				}
 				
 				theForm.addElement(argumentCollection = questions[i].field);

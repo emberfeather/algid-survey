@@ -1,7 +1,7 @@
 body {
 	background: #FFF;
 	color: #333;
-	font: 11pt/15pt 'Molengo', Century Gothic, Apple Gothic, sans-serif;
+	font: 10pt/13pt 'Molengo', Century Gothic, Apple Gothic, sans-serif;
 }
 
 h1,
@@ -114,4 +114,8 @@ h3 {
 	font-weight: bold;
 	line-heigth: 2em;
 	font-family: 'Josefin Sans Std Light', arial, san-serif;
+}
+
+.ui-buttonset {
+	font-size: .75em;
 }

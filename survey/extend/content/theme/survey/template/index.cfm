@@ -12,6 +12,7 @@
 			<cfset template.addStyles(
 				'plugins/admin/style/960/reset#midfix#.css',
 				'plugins/admin/style/960/960#midfix#.css',
+				'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-darkness/jquery-ui.css',
 				'https://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT|Josefin+Sans+Std+Light|Molengo',
 				'plugins/survey/extend/content/theme/survey/style/styles#midfix#.css'
 			) />
@@ -19,6 +20,7 @@
 			
 			<cfset template.addScripts(
 				'/cf-compendium/script/modernizr-min.js',
+				'plugins/survey/script/jquery.formSurvey#midfix#.js',
 				'plugins/survey/script/jquery.survey#midfix#.js',
 				'plugins/survey/extend/content/theme/survey/script/jquery.survey#midfix#.js'
 			) />
