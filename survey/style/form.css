@@ -1,6 +1,13 @@
 .form.survey .element.textarea label,
-.form.survey .element.rank label {
+.form.survey .element.rank label,
+.form.survey .element.singleChoice > label,
+.form.survey .element.grid > label {
 	float: none;
+	width: auto;
+}
+
+.form.survey .element.singleChoice .options {
+	margin: .25em .5em .5em 2.5em;
 }
 
 .form.survey .element.rank ol {
