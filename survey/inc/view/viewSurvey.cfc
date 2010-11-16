@@ -215,7 +215,7 @@ component extends="algid.inc.resource.base.view" {
 		theForm.addElement('file', {
 			name = "surveyFile",
 			label = "surveyFile",
-			value = ( structKeyExists(arguments.request, 'surveyFile') ? arguments.request.survey : '' )
+			value = ( structKeyExists(arguments.request, 'surveyFile') ? arguments.request.surveyFile : '' )
 		});
 		
 		return theForm.toHTML(theURL.get());
