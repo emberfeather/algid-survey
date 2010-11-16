@@ -135,7 +135,56 @@
 	</cffunction>
 	
 	<!--- 
-		Creates the checkbox form element.
+		Creates the multiple choice form element.
+	--->
+	<cffunction name="elementSingleChoice" access="private" returntype="string" output="false">
+		<cfargument name="element" type="struct" required="true" />
+		
+		<cfset var formatted = '' />
+		<cfset var defaults = {} />
+		
+		<!--- Set defaults --->
+		<cfset defaults.type = 'auto' />
+		
+		<!--- Extend the form options --->
+		<cfset arguments.element = variables.extender.extend(defaults, arguments.element) />
+		
+		<!--- Check for automatic type determination --->
+		<cfif arguments.element.type eq 'auto'>
+			<cfswitch expression="#arguments.element.options.length()#">
+				<cfcase value="1">
+					<cfset arguments.element.type = 'checkbox' />
+				</cfcase>
+				
+				<cfcase value="2,3,4,5">
+					<cfset arguments.element.type = 'checkbox' />
+				</cfcase>
+				
+				<cfdefaultcase>
+					<cfset arguments.element.type = 'autocomplete' />
+				</cfdefaultcase>
+			</cfswitch>
+		</cfif>
+		
+		<cfswitch expression="#arguments.element.type#">
+			<cfcase value="checkbox">
+				<cfset formatted = elementCheckbox(arguments.element) />
+			</cfcase>
+			
+			<cfcase value="autocomplete">
+				<cfset formatted = elementAutocomplete(arguments.element) />
+			</cfcase>
+			
+			<cfdefaultcase>
+				<cfset formatted = 'Unrecognized type: ' & arguments.element.type & '.' />
+			</cfdefaultcase>
+		</cfswitch>
+		
+		<cfreturn formatted />
+	</cffunction>
+	
+	<!--- 
+		Creates the single choice form element.
 	--->
 	<cffunction name="elementSingleChoice" access="private" returntype="string" output="false">
 		<cfargument name="element" type="struct" required="true" />
