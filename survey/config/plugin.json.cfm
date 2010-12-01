@@ -10,6 +10,7 @@
 		]
 	},
 	"key": "survey",
+	"plugin": "Survey",
 	"prerequisites": {
 		"mongodb": "0.1.0"
 	},
