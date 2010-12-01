@@ -1,6 +1,6 @@
 {
-	"releaseNotes": "",
-	"archive": "",
-	"URL": "",
+	"releaseNotes": "http://github.com/emberfeather/algid-survey/wiki/Release-Notes",
+	"archive": "http://github.com/emberfeather/algid-survey/tarball/0.1.0",
+	"URL": "http://github.com/emberfeather/algid-survey",
 	"version": "0.1.0"
 }
