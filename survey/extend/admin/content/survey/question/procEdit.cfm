@@ -15,7 +15,7 @@
 
 <cfif cgi.request_method eq 'post'>
 	<!--- Process the form submission --->
-	<cfset objectSerial.deserialize(form, question) />
+	<cfset modelSerial.deserialize(form, question) />
 	
 	<!--- Need to convert to a native value --->
 	<cfset question.setField( deserializeJSON(form.field) ) />

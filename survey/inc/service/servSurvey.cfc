@@ -34,7 +34,7 @@
 		<cfargument name="surveyID" type="string" required="true" />
 		
 		<cfset var collection = '' />
-		<cfset var objectSerial = '' />
+		<cfset var modelSerial = '' />
 		<cfset var result = '' />
 		<cfset var survey = '' />
 		
@@ -49,9 +49,9 @@
 			<cfset result = collection.findOne({ '_id': arguments.surveyID }) />
 			
 			<cfif not structIsEmpty(result)>
-				<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+				<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 				
-				<cfset objectSerial.deserialize(result, survey) />
+				<cfset modelSerial.deserialize(result, survey) />
 			</cfif>
 		</cfif>
 		
@@ -111,7 +111,7 @@
 		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="import" type="struct" required="true" />
 		
-		<cfset var objectSerial = '' />
+		<cfset var modelSerial = '' />
 		<cfset var observer = '' />
 		<cfset var result = '' />
 		<cfset var survey = '' />
@@ -131,13 +131,13 @@
 		<!--- Before Import Event --->
 		<cfset observer.beforeImport(variables.transport, arguments.currUser, arguments.import) />
 		
-		<cfset objectSerial = transport.theApplication.managers.singleton.getObjectSerial() />
+		<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 		
 		<!--- Save all surveys to db --->
 		<cfloop array="#arguments.import.surveys#" index="result">
 			<cfset survey = getSurvey(arguments.currUser, '') />
 			
-			<cfset objectSerial.deserialize(result, survey) />
+			<cfset modelSerial.deserialize(result, survey) />
 			
 			<cfset setSurvey(arguments.currUser, survey) />
 			
@@ -202,7 +202,7 @@
 		var keys = '';
 		var locales = '';
 		var plugin = '';
-		var objectSerial = '';
+		var modelSerial = '';
 		var question = '';
 		var questions = '';
 		var storagePath = '';
@@ -214,7 +214,7 @@
 		
 		locales = arguments.survey.getLocales();
 		
-		objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial();
+		modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport);
 		
 		for( i = 1; i <= arrayLen(locales); i++ ) {
 			fileContents = '## Updated on: ' & dateFormat(now()) & ' ' & timeFormat(now()) & chr(10) & chr(10);
@@ -229,7 +229,7 @@
 			for( j = 1; j <= arrayLen(questions); j++ ) {
 				question = getModel('survey', 'question');
 				
-				objectSerial.deserialize(questions[j], question);
+				modelSerial.deserialize(questions[j], question);
 				
 				// Add the properties for each of the questions
 				fileContents &= question._toProperties(locales[i]);

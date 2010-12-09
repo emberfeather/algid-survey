@@ -48,7 +48,7 @@
 		
 		<cfset var collection = '' />
 		<cfset var i = '' />
-		<cfset var objectSerial = '' />
+		<cfset var modelSerial = '' />
 		<cfset var result = '' />
 		<cfset var question = '' />
 		
@@ -67,9 +67,9 @@
 				<!--- Search for the question id match --->
 				<cfloop from="1" to="#arrayLen(result.questions)#" index="i">
 					<cfif structKeyExists(result.questions[i], '_id') and result.questions[i]._id eq arguments.questionID>
-						<cfset objectSerial = variables.transport.theApplication.managers.singleton.getObjectSerial() />
+						<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 						
-						<cfset objectSerial.deserialize(result.questions[i], question) />
+						<cfset modelSerial.deserialize(result.questions[i], question) />
 						
 						<cfbreak />
 					</cfif>
