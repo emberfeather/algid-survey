@@ -51,7 +51,7 @@
 			<cfif not structIsEmpty(result)>
 				<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 				
-				<cfset modelSerial.deserialize(result, survey) />
+				<cfset modelSerial.deserialize(input = result, object = survey, isTrustedSource = true) />
 			</cfif>
 		</cfif>
 		
@@ -137,7 +137,7 @@
 		<cfloop array="#arguments.import.surveys#" index="result">
 			<cfset survey = getSurvey(arguments.currUser, '') />
 			
-			<cfset modelSerial.deserialize(result, survey) />
+			<cfset modelSerial.deserialize(input = result, object = survey, isTrustedSource = true) />
 			
 			<cfset setSurvey(arguments.currUser, survey) />
 			
@@ -229,7 +229,7 @@
 			for( j = 1; j <= arrayLen(questions); j++ ) {
 				question = getModel('survey', 'question');
 				
-				modelSerial.deserialize(questions[j], question);
+				modelSerial.deserialize(input = questions[j], object = question, isTrustedSource = true);
 				
 				// Add the properties for each of the questions
 				fileContents &= question._toProperties(locales[i]);

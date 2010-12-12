@@ -69,7 +69,7 @@
 					<cfif structKeyExists(result.questions[i], '_id') and result.questions[i]._id eq arguments.questionID>
 						<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 						
-						<cfset modelSerial.deserialize(result.questions[i], question) />
+						<cfset modelSerial.deserialize(input = result.questions[i], object = question, isTrustedSource = true) />
 						
 						<cfbreak />
 					</cfif>
