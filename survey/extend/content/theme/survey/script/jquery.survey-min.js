@@ -1,0 +1,1 @@
+(function(a){var b,d,e;a.survey.hooks.updatePosition=function(c,f){b=b||a("#surveyPosition");b.attr("value",c);b.attr("max",f)};a.survey.hooks.updatePercent=function(c){d=d||a("#surveyPercent");e=e||a("#surveyProgress");a(".value",d).text(c.toFixed(0));e.attr("value",c)}})(jQuery);
