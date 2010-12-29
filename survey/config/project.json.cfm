@@ -12,6 +12,7 @@
 	"key": "survey",
 	"plugin": "Survey",
 	"prerequisites": {
+		"algid": "0.1.3",
 		"mongodb": "0.1.0"
 	},
 	"requestSingletons": {
