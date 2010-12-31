@@ -37,7 +37,7 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		theForm.addBundle('plugins/survey/i18n/extend/widget/widget', 'wdgtStyleGuide');
 		
 		// Add the stylesheet to the template
-		template.addStyles('plugins/survey/style/form.css');
+		template.addStyles(variables.transport.theRequest.webRoot & 'plugins/survey/style/form.css');
 		
 		// Add a mangerie of survey fields to showcase for styling
 		
