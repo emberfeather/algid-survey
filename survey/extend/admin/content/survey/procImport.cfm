@@ -19,10 +19,6 @@
 	
 	<cfset servSurvey.importSurveys(transport.theSession.managers.singleton.getUser(), import) />
 	
-	<!--- Add a success message --->
-	<!--- TODO Use i18n --->
-	<cfset transport.theSession.managers.singleton.getSuccess().addMessages('The surveys were successfully imported.') />
-	
 	<!--- Redirect --->
 	<cfset theURL.setRedirect('_base', '/survey/list') />
 	<cfset theURL.removeRedirect('survey') />

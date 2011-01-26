@@ -22,9 +22,6 @@
 	
 	<cfset servQuestion.setQuestion( transport.theSession.managers.singleton.getUser(), survey, question ) />
 	
-	<!--- Add a success message --->
-	<cfset transport.theSession.managers.singleton.getSuccess().addMessages('The question ''' & question.getQuestion() & ''' was successfully saved.') />
-	
 	<!--- Redirect --->
 	<cfset theURL.setRedirect('_base', '/survey/question/list') />
 	<cfset theURL.removeRedirect('question') />

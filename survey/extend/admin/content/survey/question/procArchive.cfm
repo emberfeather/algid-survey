@@ -20,9 +20,6 @@
 
 <cfset servQuestion.archiveQuestion( session.managers.singleton.getUser(), survey, question ) />
 
-<!--- Add a success message --->
-<cfset session.managers.singleton.getSuccess().addMessages('The question ''' & question.getQuestion() & ''' was successfully removed.') />
-
 <!--- Redirect --->
 <cfset theURL.setRedirect('_base', '/survey/question/list') />
 <cfset theURL.removeRedirect('question') />
