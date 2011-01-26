@@ -3,40 +3,40 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		super.init(arguments.i18n, arguments.locale);
 		
 		// Survey ID
-		addAttribute(
+		add__attribute(
 				attribute = '_id'
 			);
 		
 		// Archived On
-		addAttribute(
+		add__attribute(
 				attribute = 'archivedOn'
 			);
 		
 		// I18N
-		addAttribute(
+		add__attribute(
 				attribute = 'i18n',
 				defaultValue = {}
 			);
 		
 		// Questions
-		addAttribute(
+		add__attribute(
 				attribute = 'questions',
 				defaultValue = []
 			);
 		
 		// Responses
-		addAttribute(
+		add__attribute(
 				attribute = 'responses',
 				defaultValue = []
 			);
 		
 		// Survey
-		addAttribute(
+		add__attribute(
 				attribute = 'survey'
 			);
 		
 		// Set the bundle information for translation
-		addBundle('plugins/survey/i18n/inc/model', 'modSurvey');
+		add__bundle('plugins/survey/i18n/inc/model', 'modSurvey');
 		
 		return this;
 	}

@@ -13,7 +13,8 @@
 	"plugin": "Survey",
 	"prerequisites": {
 		"algid": "0.1.3",
-		"mongodb": "0.1.0"
+		"mongodb": "0.1.0",
+		"widget": "0.1.2"
 	},
 	"requestSingletons": {
 	},

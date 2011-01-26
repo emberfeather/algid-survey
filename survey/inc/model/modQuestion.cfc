@@ -3,39 +3,39 @@ component extends="plugins.mongodb.inc.resource.base.model" {
 		super.init(arguments.i18n, arguments.locale);
 		
 		// Question ID
-		addAttribute(
+		add__attribute(
 			attribute = '_id'
 		);
 		
 		// Archived On
-		addAttribute(
+		add__attribute(
 			attribute = 'archivedOn'
 		);
 		
 		// Field
-		addAttribute(
+		add__attribute(
 			attribute = 'field'
 		);
 		
 		// I18N
-		addAttribute(
+		add__attribute(
 			attribute = 'i18n',
 			defaultValue = {}
 		);
 		
 		// Question
-		addAttribute(
+		add__attribute(
 			attribute = 'question'
 		);
 		
 		// Order By
-		addAttribute(
+		add__attribute(
 			attribute = 'orderBy',
 			defaultValue = 1000
 		);
 		
 		// Set the bundle information for translation
-		addBundle('plugins/survey/i18n/inc/model', 'modQuestion');
+		add__bundle('plugins/survey/i18n/inc/model', 'modQuestion');
 		
 		return this;
 	}
