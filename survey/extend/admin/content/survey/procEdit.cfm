@@ -1,13 +1,13 @@
 <cfset servSurvey = services.get('survey', 'survey') />
 
 <!--- Retrieve the object --->
-<cfset survey = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
+<cfset survey = servSurvey.getSurvey( theURL.search('survey') ) />
 
 <cfif cgi.request_method eq 'post'>
 	<!--- Process the form submission --->
 	<cfset modelSerial.deserialize(form, survey) />
 	
-	<cfset servSurvey.setSurvey( transport.theSession.managers.singleton.getUser(), survey ) />
+	<cfset servSurvey.setSurvey( survey ) />
 	
 	<!--- Redirect --->
 	<cfset theURL.setRedirect('_base', '/survey/list') />

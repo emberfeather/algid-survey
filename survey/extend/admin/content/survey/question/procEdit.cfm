@@ -10,8 +10,8 @@
 <cfset servQuestion = services.get('survey', 'question') />
 
 <!--- Retrieve the object --->
-<cfset survey = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
-<cfset question = servQuestion.getQuestion( transport.theSession.managers.singleton.getUser(), theURL.search('survey'), theURL.search('question') ) />
+<cfset survey = servSurvey.getSurvey( theURL.search('survey') ) />
+<cfset question = servQuestion.getQuestion( theURL.search('survey'), theURL.search('question') ) />
 
 <cfif cgi.request_method eq 'post'>
 	<!--- Process the form submission --->
@@ -20,7 +20,7 @@
 	<!--- Need to convert to a native value --->
 	<cfset question.setField( deserializeJSON(form.field) ) />
 	
-	<cfset servQuestion.setQuestion( transport.theSession.managers.singleton.getUser(), survey, question ) />
+	<cfset servQuestion.setQuestion( survey, question ) />
 	
 	<!--- Redirect --->
 	<cfset theURL.setRedirect('_base', '/survey/question/list') />

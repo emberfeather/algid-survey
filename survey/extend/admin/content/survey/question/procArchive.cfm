@@ -15,10 +15,10 @@
 <cfset servQuestion = services.get('survey', 'question') />
 
 <!--- Retrieve the object --->
-<cfset survey = servSurvey.getSurvey( session.managers.singleton.getUser(), theURL.search('survey') ) />
-<cfset question = servQuestion.getQuestion( session.managers.singleton.getUser(), theURL.search('survey'), theUrl.search('question') ) />
+<cfset survey = servSurvey.getSurvey( theURL.search('survey') ) />
+<cfset question = servQuestion.getQuestion( theURL.search('survey'), theUrl.search('question') ) />
 
-<cfset servQuestion.archiveQuestion( session.managers.singleton.getUser(), survey, question ) />
+<cfset servQuestion.archiveQuestion( survey, question ) />
 
 <!--- Redirect --->
 <cfset theURL.setRedirect('_base', '/survey/question/list') />

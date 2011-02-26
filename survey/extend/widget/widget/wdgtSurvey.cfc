@@ -43,11 +43,9 @@ component extends="plugins.widget.inc.resource.base.widget" {
 		var plugin = '';
 		var survey = '';
 		var template = '';
-		var user = '';
 		var view = '';
 		
-		user = variables.transport.theSession.managers.singleton.getUser();
-		survey = variables.servSurvey.getSurvey(user, arguments.surveyID);
+		survey = variables.servSurvey.getSurvey(arguments.surveyID);
 		
 		// Add the survey title to the current template
 		if (variables.transport.theRequest.managers.singleton.hasTemplate()) {

@@ -17,7 +17,7 @@
 	
 	<cfset import = deserializeJson(import) />
 	
-	<cfset servSurvey.importSurveys(transport.theSession.managers.singleton.getUser(), import) />
+	<cfset servSurvey.importSurveys(import) />
 	
 	<!--- Redirect --->
 	<cfset theURL.setRedirect('_base', '/survey/list') />

@@ -1,6 +1,5 @@
 <cfcomponent extends="plugins.mongodb.inc.resource.base.service" output="false">
 	<cffunction name="archiveSurvey" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		
 		<cfset var collection = '' />
@@ -18,7 +17,7 @@
 		<!--- TODO Check user Permissions --->
 		
 		<!--- Before Archive Event --->
-		<cfset observer.beforeArchive(variables.transport, arguments.currUser, arguments.survey) />
+		<cfset observer.beforeArchive(variables.transport, arguments.survey) />
 		
 		<!--- Archive the survey --->
 		<cfset arguments.survey.setArchivedOn(now()) />
@@ -26,11 +25,10 @@
 		<cfset collection.save(arguments.survey.get__instance()) />
 		
 		<!--- After Archive Event --->
-		<cfset observer.afterArchive(variables.transport, arguments.currUser, arguments.survey) />
+		<cfset observer.afterArchive(variables.transport, arguments.survey) />
 	</cffunction>
 	
 	<cffunction name="getSurvey" access="public" returntype="component" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="surveyID" type="string" required="true" />
 		
 		<cfset var collection = '' />
@@ -108,7 +106,6 @@
 	</cffunction>
 	
 	<cffunction name="importSurveys" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="import" type="struct" required="true" />
 		
 		<cfset var modelSerial = '' />
@@ -129,28 +126,27 @@
 		</cfif>
 		
 		<!--- Before Import Event --->
-		<cfset observer.beforeImport(variables.transport, arguments.currUser, arguments.import) />
+		<cfset observer.beforeImport(variables.transport, arguments.import) />
 		
 		<cfset modelSerial = variables.transport.theApplication.factories.transient.getModelSerial(variables.transport) />
 		
 		<!--- Save all surveys to db --->
 		<cfloop array="#arguments.import.surveys#" index="result">
-			<cfset survey = getSurvey(arguments.currUser, '') />
+			<cfset survey = getSurvey('') />
 			
 			<cfset modelSerial.deserialize(input = result, object = survey, isTrustedSource = true) />
 			
-			<cfset setSurvey(arguments.currUser, survey) />
+			<cfset setSurvey(survey) />
 			
 			<!--- After Import Item Event --->
-			<cfset observer.afterImportItem(variables.transport, arguments.currUser, survey) />
+			<cfset observer.afterImportItem(variables.transport, survey) />
 		</cfloop>
 		
 		<!--- After Import Event --->
-		<cfset observer.afterImport(variables.transport, arguments.currUser, arguments.import) />
+		<cfset observer.afterImport(variables.transport, arguments.import) />
 	</cffunction>
 	
 	<cffunction name="setSurvey" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		
 		<cfset var collection = '' />
@@ -167,33 +163,33 @@
 		<!--- TODO Check user permissions --->
 		
 		<!--- Before Save Event --->
-		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.survey) />
+		<cfset observer.beforeSave(variables.transport, arguments.survey) />
 		
 		<cfif arguments.survey.get_ID() neq ''>
 			<!--- Before Update Event --->
-			<cfset observer.beforeUpdate(variables.transport, arguments.currUser, arguments.survey) />
+			<cfset observer.beforeUpdate(variables.transport, arguments.survey) />
 			
 			<!--- Update existing survey --->
 			<cfset collection.save(arguments.survey.get__instance()) />
 			
 			<!--- After Update Event --->
-			<cfset observer.afterUpdate(variables.transport, arguments.currUser, arguments.survey) />
+			<cfset observer.afterUpdate(variables.transport, arguments.survey) />
 		<cfelse>
 			<!--- Before Create Event --->
-			<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.survey) />
+			<cfset observer.beforeCreate(variables.transport, arguments.survey) />
 			
 			<!--- Insert as a new record --->
 			<cfset collection.save(arguments.survey.get__instance()) />
 			
 			<!--- After Create Event --->
-			<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.survey) />
+			<cfset observer.afterCreate(variables.transport, arguments.survey) />
 		</cfif>
 		
 		<!--- After Save Event --->
-		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.survey) />
+		<cfset observer.afterSave(variables.transport, arguments.survey) />
 	</cffunction>
 <cfscript>
-	public void function updateI18N(required component currUser, required component survey) {
+	public void function updateI18N(required component survey) {
 		var fileContents = '';
 		var i = '';
 		var i18n = '';

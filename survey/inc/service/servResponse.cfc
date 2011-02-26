@@ -52,7 +52,6 @@
 	</cffunction>
 	
 	<cffunction name="setResponse" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		<cfargument name="response" type="component" required="true" />
 		
@@ -70,18 +69,18 @@
 		<!--- TODO Check user permissions --->
 		
 		<!--- Before Save Event --->
-		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.response) />
+		<cfset observer.beforeSave(variables.transport, arguments.response) />
 		
 		<!--- Before Create Event --->
-		<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.response) />
+		<cfset observer.beforeCreate(variables.transport, arguments.response) />
 		
 		<!--- Push onto the survey --->
 		<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$push': { 'responses': arguments.response.get__instance() } }) />
 		
 		<!--- After Create Event --->
-		<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.response) />
+		<cfset observer.afterCreate(variables.transport, arguments.response) />
 		
 		<!--- After Save Event --->
-		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.response) />
+		<cfset observer.afterSave(variables.transport, arguments.response) />
 	</cffunction>
 </cfcomponent>

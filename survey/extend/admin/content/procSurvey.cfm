@@ -7,7 +7,7 @@
 <cfset servSurvey = services.get('survey', 'survey') />
 
 <!--- Retrieve the object --->
-<cfset survey = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
+<cfset survey = servSurvey.getSurvey( theURL.search('survey') ) />
 
 <!--- Add to the current levels --->
 <cfset template.addLevel(survey.getSurvey(), survey.getSurvey(), theUrl.get(), 0, true) />

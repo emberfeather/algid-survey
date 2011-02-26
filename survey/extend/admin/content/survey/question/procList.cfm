@@ -19,7 +19,7 @@
 </cfif>
 
 <!--- Retrieve the object --->
-<cfset surveyObj = servSurvey.getSurvey( transport.theSession.managers.singleton.getUser(), theURL.search('survey') ) />
+<cfset surveyObj = servSurvey.getSurvey( theURL.search('survey') ) />
 
 <cfset theUrl.setSurvey('_base', '/survey') />
 

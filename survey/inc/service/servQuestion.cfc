@@ -1,6 +1,5 @@
 <cfcomponent extends="plugins.mongodb.inc.resource.base.service" output="false">
 	<cffunction name="archiveQuestion" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		<cfargument name="question" type="component" required="true" />
 		
@@ -21,7 +20,7 @@
 		<!--- TODO Check user Permissions --->
 		
 		<!--- Before Archive Event --->
-		<cfset observer.beforeArchive(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+		<cfset observer.beforeArchive(variables.transport, arguments.survey, arguments.question) />
 		
 		<!--- Archive the question --->
 		<cfset questions = arguments.survey.getQuestions() />
@@ -38,11 +37,10 @@
 		</cfloop>
 		
 		<!--- After Archive Event --->
-		<cfset observer.afterArchive(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+		<cfset observer.afterArchive(variables.transport, arguments.survey, arguments.question) />
 	</cffunction>
 	
 	<cffunction name="getQuestion" access="public" returntype="component" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="surveyID" type="string" required="true" />
 		<cfargument name="questionID" type="string" required="true" />
 		
@@ -141,7 +139,6 @@
 	</cffunction>
 	
 	<cffunction name="setQuestion" access="public" returntype="void" output="false">
-		<cfargument name="currUser" type="component" required="true" />
 		<cfargument name="survey" type="component" required="true" />
 		<cfargument name="question" type="component" required="true" />
 		
@@ -161,11 +158,11 @@
 		<!--- TODO Check user permissions --->
 		
 		<!--- Before Save Event --->
-		<cfset observer.beforeSave(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+		<cfset observer.beforeSave(variables.transport, arguments.survey, arguments.question) />
 		
 		<cfif arguments.question.get_ID() neq ''>
 			<!--- Before Update Event --->
-			<cfset observer.beforeUpdate(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+			<cfset observer.beforeUpdate(variables.transport, arguments.survey, arguments.question) />
 			
 			<cfset questions = arguments.survey.getQuestions() />
 			
@@ -191,10 +188,10 @@
 			</cfif>
 			
 			<!--- After Update Event --->
-			<cfset observer.afterUpdate(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+			<cfset observer.afterUpdate(variables.transport, arguments.survey, arguments.question) />
 		<cfelse>
 			<!--- Before Create Event --->
-			<cfset observer.beforeCreate(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+			<cfset observer.beforeCreate(variables.transport, arguments.survey, arguments.question) />
 			
 			<!--- Create an ID --->
 			<cfset arguments.question.set_ID(createUUID()) />
@@ -203,10 +200,10 @@
 			<cfset collection.update({ '_id': arguments.survey.get_id() }, { '$push': { 'questions': arguments.question.get__instance() } }) />
 			
 			<!--- After Create Event --->
-			<cfset observer.afterCreate(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+			<cfset observer.afterCreate(variables.transport, arguments.survey, arguments.question) />
 		</cfif>
 		
 		<!--- After Save Event --->
-		<cfset observer.afterSave(variables.transport, arguments.currUser, arguments.survey, arguments.question) />
+		<cfset observer.afterSave(variables.transport, arguments.survey, arguments.question) />
 	</cffunction>
 </cfcomponent>
