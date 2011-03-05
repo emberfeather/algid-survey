@@ -66,7 +66,7 @@
 		
 		<cfset collection = variables.db.getCollection( 'response.response' ) />
 		
-		<!--- TODO Check user permissions --->
+		<cfset validate__model(arguments.response) />
 		
 		<!--- Before Save Event --->
 		<cfset observer.beforeSave(variables.transport, arguments.response) />

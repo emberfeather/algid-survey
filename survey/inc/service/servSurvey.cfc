@@ -160,7 +160,7 @@
 		
 		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
 		
-		<!--- TODO Check user permissions --->
+		<cfset validate__model(arguments.survey) />
 		
 		<!--- Before Save Event --->
 		<cfset observer.beforeSave(variables.transport, arguments.survey) />
