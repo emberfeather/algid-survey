@@ -66,7 +66,9 @@ component extends="algid.inc.resource.base.view" {
 		
 		datagrid.addColumn({
 			key = '_id',
-			type = 'checkbox',
+			format = {
+				checkbox: {}
+			},
 			class = 'width-min'
 		});
 		
