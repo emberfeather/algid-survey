@@ -156,7 +156,7 @@ component extends="algid.inc.resource.base.view" {
 		
 		i18n = variables.transport.theApplication.managers.singleton.getI18N();
 		theURL = variables.transport.theRequest.managers.singleton.getUrl();
-		theForm = variables.transport.theApplication.factories.transient.getFormStandard('survey', i18n);
+		theForm = variables.transport.theApplication.factories.transient.getForm('survey', i18n);
 		
 		// Add the resource bundle for the view
 		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');
@@ -209,7 +209,7 @@ component extends="algid.inc.resource.base.view" {
 		
 		i18n = variables.transport.theApplication.managers.singleton.getI18N();
 		theURL = variables.transport.theRequest.managers.singleton.getUrl();
-		theForm = variables.transport.theApplication.factories.transient.getFormStandard('survey', i18n);
+		theForm = variables.transport.theApplication.factories.transient.getForm('survey', i18n);
 		
 		// Add the resource bundle for the view
 		theForm.addBundle('plugins/survey/i18n/inc/view', 'viewSurvey');

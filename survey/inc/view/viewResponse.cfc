@@ -9,7 +9,7 @@
 		
 		<cfset i18n = variables.transport.theApplication.managers.singleton.getI18N() />
 		<cfset theURL = variables.transport.theRequest.managers.singleton.getUrl() />
-		<cfset theForm = variables.transport.theApplication.factories.transient.getFormStandard('response', i18n) />
+		<cfset theForm = variables.transport.theApplication.factories.transient.getForm('response', i18n) />
 		
 		<!--- Add the resource bundle for the view --->
 		<cfset theForm.addBundle('plugins/survey/i18n/inc/view', 'viewResponse') />
