@@ -155,6 +155,7 @@
 		
 		<cfset collection = variables.db.getCollection( 'survey.survey' ) />
 		
+		<cfset scrub__model(arguments.question) />
 		<cfset validate__model(arguments.question) />
 		
 		<!--- Before Save Event --->

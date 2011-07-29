@@ -66,6 +66,7 @@
 		
 		<cfset collection = variables.db.getCollection( 'response.response' ) />
 		
+		<cfset scrub__model(arguments.response) />
 		<cfset validate__model(arguments.response) />
 		
 		<!--- Before Save Event --->
