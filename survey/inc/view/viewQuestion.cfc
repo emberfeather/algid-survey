@@ -1,7 +1,6 @@
 <cfcomponent extends="algid.inc.resource.base.view" output="false">
 	<cffunction name="edit" access="public" returntype="string" output="false">
 		<cfargument name="question" type="component" required="true" />
-		<cfargument name="request" type="struct" default="#{}#" />
 		
 		<cfset var i18n = '' />
 		<cfset var theForm = '' />
@@ -15,16 +14,16 @@
 		<cfset theForm.addBundle('plugins/survey/i18n/inc/view', 'viewQuestion') />
 		
 		<cfset theForm.addElement('text', {
-				name = "question",
-				label = "question",
-				value = ( structKeyExists(arguments.request, 'question') ? arguments.request.question : arguments.question.getQuestion() )
-			}) />
+			name = "question",
+			label = "question",
+			value = arguments.question.getQuestion()
+		}) />
 		
 		<cfset theForm.addElement('textarea', {
-				name = "field",
-				label = "field",
-				value = ( structKeyExists(arguments.request, 'field') ? arguments.request.field : serializeJSON( arguments.question.getField() ) )
-			}) />
+			name = "field",
+			label = "field",
+			value = serializeJSON( arguments.question.getField() )
+		}) />
 		
 		<cfreturn theForm.toHTML(theURL.get()) />
 	</cffunction>
