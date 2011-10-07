@@ -1,6 +1,6 @@
 component extends="plugins.widget.inc.resource.base.widget" {
-	public component function init(required struct transport) {
-		super.init(arguments.transport);
+	public component function init(required struct transport, required string path) {
+		super.init(arguments.transport, arguments.path);
 		
 		variables.theUrl = variables.transport.theRequest.managers.singleton.getUrl();
 		variables.i18n = variables.transport.theApplication.managers.singleton.getI18N();
